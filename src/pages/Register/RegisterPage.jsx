@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router";
 import { FcGoogle } from "react-icons/fc";
-import { AuthContext } from "../../context/AuthContext";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import {
@@ -15,10 +14,11 @@ import {
 } from "react-icons/fa";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import UseAuth from "../../CustomHooks/UseAuth";
+import useAuth from "../../CustomHooks/useAuth";
+
 
 const RegisterPage = () => {
-  const { registerUser, googleLogin, user } = UseAuth()
+  const { registerUser, googleLogin, user } = useAuth()
   console.log(user);
   
   const navigate = useNavigate();

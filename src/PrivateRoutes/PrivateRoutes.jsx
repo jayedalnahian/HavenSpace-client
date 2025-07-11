@@ -1,10 +1,10 @@
 import React from "react";
-import UseAuth from "../CustomHooks/UseAuth";
+import useAuth from "../CustomHooks/useAuth";
 import LoadingSpinner from "../components/LoadingSpinner";
 import LoginPage from "../pages/Login/LoginPage";
 
 const PrivateRoutes = ({ children }) => {
-  const { user, loading } = UseAuth();
+  const { user, loading } = useAuth();
   if (loading) return <LoadingSpinner></LoadingSpinner>;
   if (!user) {
     return (
