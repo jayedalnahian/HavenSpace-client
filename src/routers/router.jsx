@@ -21,6 +21,8 @@ import ManageReviews from "../AdminPages/ManageReviews";
 import ReportedProperties from "../AdminPages/ReportedProperties";
 import AdvertiseProperties from '../AdminPages/AdvertiseProperties'
 import UserMyReviews from "../UserPages/UserMyReviews";
+import PropertyDetailsPage from "../pages/PropertyDetails/PropertyDetailsPage";
+import EditPropertyDetails from "../pages/PropertyDetails/EditPropertyDetails";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +32,9 @@ const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: "/login", element: <LoginPage /> },
       { path: "/register", element: <RegisterPage /> },
+      { path: "/propertyDetails/:id", element: <PropertyDetailsPage></PropertyDetailsPage>},
+      { path: "/EditPropertyDetails/:id", element: <EditPropertyDetails></EditPropertyDetails>},
+
       {
         path: "/dashboard",
         element: <DashboardLayout></DashboardLayout>,

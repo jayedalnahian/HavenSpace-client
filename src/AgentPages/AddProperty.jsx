@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useAxiosInterceptor from "../CustomHooks/useAxiosInterceptor";
 import Swal from "sweetalert2";
+import useAuth from "../CustomHooks/useAuth";
 
 const IMGBB_API_KEY = "2e1c7fe21ce6c1d4a08100cd99fc90f8";
 const IMGBB_API_URL = "https://api.imgbb.com/1/upload";
@@ -13,12 +14,14 @@ const AddProperty = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
   const axiosInterceptor = useAxiosInterceptor();
+  const { user } = useAuth();
+  // console.log(user);
+  
+
 
   // Mock agent data (replace with your actual context/state)
   const agentData = {
-    name: "John Doe",
-    email: "john.doe@havenspace.com",
-    id: "agent123", // Mock agent ID
+    name: user?.displayName,
   };
 
   const {
@@ -112,7 +115,8 @@ const AddProperty = () => {
       if (formData.imageFile) {
         imageUrl = await uploadImageToImgBB(formData.imageFile);
       }
-
+      
+      
       // 2. Prepare the final property data
       const propertyData = {
         title: formData.title,
@@ -128,13 +132,13 @@ const AddProperty = () => {
         image: imageUrl,
         availability: formData.availability,
         agentName: formData.agentName,
-        agentEmail: formData.agentEmail,
-        agentId: formData.agentId,
+        agentEmail: user.email,
+        agentId: user.uid,
         createdAt: new Date().toISOString(),
       };
 
       // 3. API call to your backend
-      // console.log("Final property data to submit:", propertyData);
+      console.log("Final property data to submit:", propertyData);
       try {
         const { data } = await axiosInterceptor.post(
           "/api/properties",
@@ -560,7 +564,7 @@ const AddProperty = () => {
               <input type="hidden" {...register("agentId")} />
 
               {/* Agent Name */}
-              <div>
+              {/* <div>
                 <label
                   htmlFor="agentName"
                   className="block mb-2 font-medium"
@@ -572,30 +576,12 @@ const AddProperty = () => {
                   id="agentName"
                   type="text"
                   readOnly
+                  
                   {...register("agentName")}
                   className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none"
                   style={{ backgroundColor: "#F2EFE7", color: "#006A71" }}
                 />
-              </div>
-
-              {/* Agent Email */}
-              <div>
-                <label
-                  htmlFor="agentEmail"
-                  className="block mb-2 font-medium"
-                  style={{ color: "#006A71" }}
-                >
-                  Agent Email
-                </label>
-                <input
-                  id="agentEmail"
-                  type="email"
-                  readOnly
-                  {...register("agentEmail")}
-                  className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none"
-                  style={{ backgroundColor: "#F2EFE7", color: "#006A71" }}
-                />
-              </div>
+              </div> */}
             </div>
           </div>
 
