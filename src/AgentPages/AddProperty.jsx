@@ -138,7 +138,7 @@ const AddProperty = () => {
       };
 
       // 3. API call to your backend
-      console.log("Final property data to submit:", propertyData);
+      // console.log("Final property data to submit:", propertyData);
       try {
         const { data } = await axiosInterceptor.post(
           "/api/properties",

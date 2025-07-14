@@ -8,6 +8,8 @@ import { IoIosNotifications } from 'react-icons/io';
 const Navbar = ({ userData }) => {
   const { user, logOut } = useContext(AuthContext);
 
+  
+
   const logOutUser = () => {
     logOut()
       .then(() => {
@@ -33,7 +35,7 @@ const Navbar = ({ userData }) => {
       </li>
       {user && (
         <li>
-          <NavLink to="/dashboard" className={({ isActive }) => isActive ? "text-[#006A71] font-bold" : "hover:text-[#48A6A7]"}>
+          <NavLink to={`/dashboard`} className={({ isActive }) => isActive ? "text-[#006A71] font-bold" : "hover:text-[#48A6A7]"}>
             Dashboard
           </NavLink>
         </li>

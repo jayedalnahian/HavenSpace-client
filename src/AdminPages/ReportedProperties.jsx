@@ -155,7 +155,7 @@ const ReportedProperties = () => {
 
   const handleViewProperty = (id) => {
     // In a real app, this would navigate to the property
-    console.log(`View property ${id}`);
+    // console.log(`View property ${id}`);
     toast.info('Opening property details...', {
       position: "top-right",
       autoClose: 2000,

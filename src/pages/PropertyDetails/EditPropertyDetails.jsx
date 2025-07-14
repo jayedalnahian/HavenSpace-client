@@ -73,7 +73,7 @@ const EditPropertyDetails = () => {
     setIsSubmitting(true)
     try {
       await updateProperty({ id, updatedData: data });
-      navigate("/dashboard/agent/my-properties");
+      navigate("/dashboard/my-properties");
     } catch (err) {
       console.error("Update failed", err);
     } finally{
@@ -105,7 +105,7 @@ const EditPropertyDetails = () => {
           <h2 className="text-2xl font-bold mb-4" style={{ color: '#006A71' }}>Error Loading Property</h2>
           <p className="text-red-500 mb-6">{error.message}</p>
           <button
-            onClick={() => navigate('/dashboard/agent/my-properties')}
+            onClick={() => navigate('/dashboard/my-properties')}
             className="px-4 py-2 rounded-lg font-medium"
             style={{ 
               backgroundColor: '#48A6A7',
@@ -129,7 +129,7 @@ const EditPropertyDetails = () => {
     >
       <div className="max-w-4xl mx-auto">
         <button
-          onClick={() => navigate('/dashboard/agent/my-properties')}
+          onClick={() => navigate('/dashboard/my-properties')}
           className="flex items-center mb-6 text-[#006A71] hover:text-[#48A6A7] transition-colors"
         >
           <FaArrowLeft className="mr-2" />

@@ -20,7 +20,8 @@ import useDeleteProperty from "../CustomHooks/useDeleteProperty";
 import Swal from "sweetalert2";
 
 const MyProperties = () => {
-  const { properties: myAddedProperties, isLoading, error } = useProperties();
+  const { properties: myAddedProperties, isLoading, error, refetch} = useProperties();
+  refetch()
   const { mutate: deleteProperty, isPending } = useDeleteProperty();
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -73,7 +74,7 @@ const MyProperties = () => {
     indexOfFirstProperty,
     indexOfLastProperty
   );
-  console.log(currentProperties);
+  // console.log(currentProperties);
 
   const totalPages = Math.ceil(filteredProperties.length / propertiesPerPage);
 
@@ -129,7 +130,7 @@ const MyProperties = () => {
     }
   };
 
-  if (isLoading) {
+  if (isLoading || isPending) {
     return (
       <div
         className="p-6 min-h-screen flex items-center justify-center"

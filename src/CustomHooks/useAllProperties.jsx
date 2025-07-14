@@ -1,11 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosInterceptor from "./useAxiosInterceptor";
-import useAuth from "./useAuth";
 
-const useProperties = () => {
+const useAllProperties = () => {
   const axiosSecure = useAxiosInterceptor();
-  const {user} = useAuth()
-
+  
   const {
     data: properties,
     isLoading,
@@ -14,7 +12,7 @@ const useProperties = () => {
   } = useQuery({
     queryKey: ["properties"],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/api/properties?agentId=${user.uid}`);
+      const res = await axiosSecure.get(`/api/properties`);
 
       return res.data;
     },
@@ -25,4 +23,4 @@ const useProperties = () => {
   return { properties, isLoading, error, refetch};
 };
 
-export default useProperties;
+export default useAllProperties;

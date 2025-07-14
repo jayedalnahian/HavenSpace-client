@@ -1,27 +1,41 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosInterceptor from "./useAxiosInterceptor";
 import useAuth from "./useAuth";
-
+import axios from "axios";
 
 const useUserRole = () => {
   const axiosSecure = useAxiosInterceptor();
-  const {user, loading} = useAuth()
+  const { user, loading: authLoading } = useAuth();
   const uid = user?.uid;
   
-
-  const { data: role, isLoading, error } = useQuery({
-    queryKey: ["userRole"],
+  
+  
+  
+  
+  
+  const { 
+    data: role, 
+    isLoading: queryLoading, 
+    error 
+  } = useQuery({
+    queryKey: ["userRole", uid],
     queryFn: async () => {
       const res = await axiosSecure.get(`/api/user-role/${uid}`);
-      console.log(uid);
+      return res?.data?.role;
       
-      return res.data.role;
     },
+    enabled: !!uid && !authLoading, // Wait until auth is loaded
     staleTime: 5 * 60 * 1000,
   });
+  
+  console.log(role);
+  
 
-
-  return { role, isLoading, error, loading};
+  return { 
+    role, 
+    isLoading: queryLoading || authLoading, 
+    error 
+  };
 };
 
 export default useUserRole;

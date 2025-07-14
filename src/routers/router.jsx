@@ -19,10 +19,11 @@ import ManageUsers from "../AdminPages/ManageUsers";
 import ManageProperties from "../AdminPages/ManageProperties";
 import ManageReviews from "../AdminPages/ManageReviews";
 import ReportedProperties from "../AdminPages/ReportedProperties";
-import AdvertiseProperties from '../AdminPages/AdvertiseProperties'
+import AdvertiseProperties from "../AdminPages/AdvertiseProperties";
 import UserMyReviews from "../UserPages/UserMyReviews";
 import PropertyDetailsPage from "../pages/PropertyDetails/PropertyDetailsPage";
 import EditPropertyDetails from "../pages/PropertyDetails/EditPropertyDetails";
+import AllPropertiesPage from "../pages/AllProperties/AllPropertiesPage";
 
 const router = createBrowserRouter([
   {
@@ -32,96 +33,75 @@ const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: "/login", element: <LoginPage /> },
       { path: "/register", element: <RegisterPage /> },
-      { path: "/propertyDetails/:id", element: <PropertyDetailsPage></PropertyDetailsPage>},
-      { path: "/EditPropertyDetails/:id", element: <EditPropertyDetails></EditPropertyDetails>},
-
+      {
+        path: "/propertyDetails/:id",
+        element: <PropertyDetailsPage></PropertyDetailsPage>,
+      },
+      {
+        path: "/EditPropertyDetails/:id",
+        element: <EditPropertyDetails></EditPropertyDetails>,
+      },
+      {
+        path:"/all-properties",
+        element: <AllPropertiesPage></AllPropertiesPage>
+      },
       {
         path: "/dashboard",
         element: <DashboardLayout></DashboardLayout>,
         children: [
-          
           {
-            path: "agent",
-            element: <AgentLayout></AgentLayout>,
-            children:[
-              {
-                index: true,
-                path: 'profile',
-                element: <AgentProfile></AgentProfile>
-              },
-              {
-                path: "add-property",
-                element: <AddProperty></AddProperty>
-              },
-              {
-                path: "my-properties",
-                element: <MyProperties></MyProperties>
-              },
-              {
-                path: "sold-properties",
-                element: <SoldProperties></SoldProperties>
-              },
-              {
-                path: "requests",
-                element: <RequestedProperties></RequestedProperties>
-              }
-            ]
+            index: true,
+            path: "profile",
+            element: <AgentProfile></AgentProfile>,
           },
           {
-            path: "admin",
-            element: <AgentLayout></AgentLayout>,
-            children:[
-              {
-                index: true,
-                path: 'profile',
-                element: <AdminProfile></AdminProfile>
-              },
-              {
-                path: "manage-users",
-                element: <ManageUsers></ManageUsers>
-              },
-              {
-                path: "manage-properties",
-                element: <ManageProperties></ManageProperties>
-              },
-              {
-                path: "manage-reviews",
-                element: <ManageReviews></ManageReviews>
-              },
-              {
-                path: "advertise-properties",
-                element: <AdvertiseProperties></AdvertiseProperties>
-              },
-              {
-                path: "reported-properties",
-                element: <ReportedProperties></ReportedProperties>
-              }
-            ]
+            path: "add-property",
+            element: <AddProperty></AddProperty>,
           },
           {
-            path: "user",
-            element: <UserLaout></UserLaout>,
-            children:[
-              {
-                index: true,
-                path: 'profile',
-                element: <UserProfile></UserProfile>
-              },
-              {
-                path: "wishlist",
-                element: <UserWishList></UserWishList>
-              },
-              {
-                path: "bought",
-                element: <UserBought></UserBought>
-              },
-              {
-                path: "reviews",
-                element: <UserMyReviews></UserMyReviews>
-              },
-            ]
+            path: "my-properties",
+            element: <MyProperties></MyProperties>,
           },
-          
+          {
+            path: "sold-properties",
+            element: <SoldProperties></SoldProperties>,
+          },
+          {
+            path: "requests",
+            element: <RequestedProperties></RequestedProperties>,
+          },
+          {
+            path: "manage-users",
+            element: <ManageUsers></ManageUsers>,
+          },
+          {
+            path: "manage-properties",
+            element: <ManageProperties></ManageProperties>,
+          },
+          {
+            path: "manage-reviews",
+            element: <ManageReviews></ManageReviews>,
+          },
+          {
+            path: "advertise-properties",
+            element: <AdvertiseProperties></AdvertiseProperties>,
+          },
+          {
+            path: "reported-properties",
+            element: <ReportedProperties></ReportedProperties>,
+          },
+          {
+            path: "wishlist",
+            element: <UserWishList></UserWishList>,
+          },
+          {
+            path: "bought",
+            element: <UserBought></UserBought>,
+          },
+          {
+            path: "reviews",
+            element: <UserMyReviews></UserMyReviews>,
+          },
         ],
       },
     ],

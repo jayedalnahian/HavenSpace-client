@@ -23,84 +23,87 @@ import LoadingSpinner from "../../components/LoadingSpinner";
 import ErrorPage from "../../components/ErrorPage";
 
 const DashboardLayout = () => {
+  // Define all navigation options
   const agentNavLinks = [
-    { to: "agent/profile", icon: <FaUser />, text: "My Profile" },
-    { to: "agent/add-property", icon: <FaPlus />, text: "Add Property" },
-    { to: "agent/my-properties", icon: <FaBuilding />, text: "My Properties" },
+    { to: "profile", icon: <FaUser />, text: "My Profile" },
+    { to: "add-property", icon: <FaPlus />, text: "Add Property" },
+    { to: "my-properties", icon: <FaBuilding />, text: "My Properties" },
     {
-      to: "agent/sold-properties",
+      to: "sold-properties",
       icon: <FaCheckCircle />,
       text: "Sold Properties",
     },
     {
-      to: "agent/requests",
+      to: "requests",
       icon: <FaHandshake />,
       text: "Requested Properties",
     },
   ];
 
   const adminNavLinks = [
-    { to: "admin/profile", icon: <FaUserShield />, text: "My Profile" },
+    { to: "profile", icon: <FaUserShield />, text: "My Profile" },
     {
-      to: "admin/reported-properties",
+      to: "reported-properties",
       icon: <FaFlag />,
       text: "Reported Properties",
     },
     {
-      to: "admin/advertise-properties",
+      to: "advertise-properties",
       icon: <FaBullhorn />,
       text: "Advertise Properties",
     },
     {
-      to: "admin/manage-reviews",
+      to: "manage-reviews",
       icon: <FaCheckCircle />,
       text: "Manage Reviews",
     },
     {
-      to: "admin/manage-properties",
+      to: "manage-properties",
       icon: <FaClipboardList />,
       text: "Manage Properties",
     },
-    { to: "admin/manage-users", icon: <FaUsers />, text: "Manage Users" },
+    { to: "manage-users", icon: <FaUsers />, text: "Manage Users" },
   ];
 
   const userNavLinks = [
-    { to: "user/profile", icon: <FaUserCircle />, text: "My Profile" },
-    { to: "user/wishlist", icon: <FaHeart />, text: "My Wish List" },
+    { to: "profile", icon: <FaUserCircle />, text: "My Profile" },
+    { to: "wishlist", icon: <FaHeart />, text: "My Wish List" },
     {
-      to: "user/bought",
+      to: "bought",
       icon: <FaShoppingBag />,
       text: "My Bought Properties",
     },
-    { to: "user/reviews", icon: <FaStar />, text: "My Reviews" },
+    { to: "reviews", icon: <FaStar />, text: "My Reviews" },
   ];
 
-  const [user, setUser] = useState(userNavLinks);
-
-  const { role, isLoading, error, loading} = useUserRole();
+  const [navLinks, setNavLinks] = useState([]);
+  const { role, isLoading, error } = useUserRole();
   
+  
+
   useEffect(() => {
     if (role === "admin") {
-      setUser(adminNavLinks);
+      setNavLinks(adminNavLinks);
     } else if (role === "agent") {
-      setUser(agentNavLinks);
+      setNavLinks(agentNavLinks);
     } else {
-      setUser(userNavLinks);
+      setNavLinks(userNavLinks);
     }
   }, [role]);
 
-  if (isLoading || loading) {
-    return <LoadingSpinner></LoadingSpinner>;
+  if (isLoading) {
+    return <LoadingSpinner />;
   }
 
   if (error) {
-    return <ErrorPage></ErrorPage>;
+    return <ErrorPage />;
   }
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#F2EFE7" }}>
       <div className="drawer lg:drawer-open">
         <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+        
         {/* Page content */}
         <div className="drawer-content">
           {/* Mobile navbar */}
@@ -150,10 +153,11 @@ const DashboardLayout = () => {
 
             {/* Navigation links */}
             <ul className="space-y-2">
-              {user.map((link, index) => (
+              {navLinks.map((link, index) => (
                 <li key={index}>
                   <NavLink
                     to={link.to}
+                    end
                     className={({ isActive }) =>
                       `flex items-center gap-3 p-3 rounded-lg transition-colors
                       ${
