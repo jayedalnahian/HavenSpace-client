@@ -4,17 +4,12 @@ import HomePage from "../pages/Home/HomePage";
 import LoginPage from "../pages/Login/LoginPage";
 import RegisterPage from "../pages/Register/RegisterPage";
 import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout";
-import AgentLayout from "../layouts/AgentLayout/AgentLayout";
-import AgentProfile from "../AgentPages/AgentProfile";
 import AddProperty from "../AgentPages/AddProperty";
 import MyProperties from "../AgentPages/MyProperties";
 import SoldProperties from "../AgentPages/SoldProperties";
 import RequestedProperties from "../AgentPages/RequestedProperties";
-import UserLaout from "../layouts/UserLayout/UserLaout";
-import UserProfile from "../UserPages/UserProfile";
 import UserWishList from "../UserPages/UserWishList";
 import UserBought from "../UserPages/UserBought";
-import AdminProfile from "../AdminPages/AdminProfile";
 import ManageUsers from "../AdminPages/ManageUsers";
 import ManageProperties from "../AdminPages/ManageProperties";
 import ManageReviews from "../AdminPages/ManageReviews";
@@ -24,6 +19,7 @@ import UserMyReviews from "../UserPages/UserMyReviews";
 import PropertyDetailsPage from "../pages/PropertyDetails/PropertyDetailsPage";
 import EditPropertyDetails from "../pages/PropertyDetails/EditPropertyDetails";
 import AllPropertiesPage from "../pages/AllProperties/AllPropertiesPage";
+import Profile from "../AgentPages/Profile";
 
 const router = createBrowserRouter([
   {
@@ -42,8 +38,8 @@ const router = createBrowserRouter([
         element: <EditPropertyDetails></EditPropertyDetails>,
       },
       {
-        path:"/all-properties",
-        element: <AllPropertiesPage></AllPropertiesPage>
+        path: "/all-properties",
+        element: <AllPropertiesPage></AllPropertiesPage>,
       },
       {
         path: "/dashboard",
@@ -52,7 +48,7 @@ const router = createBrowserRouter([
           {
             index: true,
             path: "profile",
-            element: <AgentProfile></AgentProfile>,
+            element: <Profile></Profile>,
           },
           {
             path: "add-property",
