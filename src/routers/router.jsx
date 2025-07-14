@@ -20,6 +20,7 @@ import PropertyDetailsPage from "../pages/PropertyDetails/PropertyDetailsPage";
 import EditPropertyDetails from "../pages/PropertyDetails/EditPropertyDetails";
 import AllPropertiesPage from "../pages/AllProperties/AllPropertiesPage";
 import Profile from "../AgentPages/Profile";
+import PaymentSuccessPage from "../pages/PropertyDetails/PaymentSuccessPage";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
         element: <EditPropertyDetails></EditPropertyDetails>,
       },
       {
+        path: "/payment-success/:id",
+        element: <PaymentSuccessPage></PaymentSuccessPage>
+      },
+      {
         path: "/all-properties",
         element: <AllPropertiesPage></AllPropertiesPage>,
       },
@@ -47,7 +52,6 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            path: "profile",
             element: <Profile></Profile>,
           },
           {

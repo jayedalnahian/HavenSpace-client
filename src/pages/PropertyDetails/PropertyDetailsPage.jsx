@@ -16,12 +16,14 @@ import useSingleProperty from "../../CustomHooks/useSingleProperty";
 import useAuth from "../../CustomHooks/useAuth";
 import useAddToWishlist from "../../CustomHooks/useAddToWishlist";
 import Swal from "sweetalert2";
+import useAxiosInterceptor from "../../CustomHooks/useAxiosInterceptor";
 
 const PropertyDetailsPage = () => {
   const [btnOn, setBtnOn] = useState(true);
   const { id } = useParams();
   const { property, isLoading, error } = useSingleProperty(id);
   const { user } = useAuth();
+  const axiosSecure = useAxiosInterceptor()
 
   const { addToWishlist, isPending, isSuccess } = useAddToWishlist();
 
@@ -40,19 +42,22 @@ const PropertyDetailsPage = () => {
     console.log(wishlistData);
   };
 
-  const paymentProccess = () => {
-    Swal.fire({
-      title: "Let's Start Payment Proccess.",
-      showCancelButton: true,
-      confirmButtonColor: "#48A6A7",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, Start Payment",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        console.log("do the payment");
-      }
-    });
-  };
+  const paymentProccess = async () => {
+        
+          const res = await axiosSecure.post(
+            "/api/payment/create-checkout-session",
+            {
+              property: property,
+            }
+          );
+
+          if (res.data?.url) {
+            console.log(res.data?.url);
+            
+            window.location.href = res.data.url; // redirect to Stripe hosted checkout
+          }
+        
+      };
 
   if (isLoading) {
     return (
