@@ -17,7 +17,7 @@ import useUserData from "../CustomHooks/useUserData";
 const Profile = () => {
   // Default data structure if no props are passed
   const { userData, isLoading, error, refetch } = useUserData();
-  console.log(userData);
+  // console.log(userData);
 
   const defaultUserData = {
     profilePicture: null,
@@ -32,7 +32,7 @@ const Profile = () => {
   };
 
   const data = userData || defaultUserData;
-  console.log("data", data);
+  // console.log("data", data);
 
   const getRoleIcon = () => {
     switch (data.role) {

@@ -1,18 +1,28 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import useAuth from '../CustomHooks/useAuth';
 
 const ReviewModal = ({ property, onClose, onSubmit }) => {
   const [rating, setRating] = useState(5);
   const [reviewText, setReviewText] = useState('');
+  const {user} = useAuth()
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit({
-      propertyId: property.id,
+      propertyId: property._id,
       rating,
-      text: reviewText
+      text: reviewText,
+      agentId: property.agentId,
+      submittedAt: new Date().toISOString(),
+      userUID: user?.uid,
+      propertyIMG: property.image,
+      title: property.title
     });
   };
+
+  // console.log(property);
+  
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">

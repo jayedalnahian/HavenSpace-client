@@ -25,7 +25,7 @@ import ErrorPage from "../../components/ErrorPage";
 const DashboardLayout = () => {
   // Define all navigation options
   const agentNavLinks = [
-    { to: "/", icon: <FaUser />, text: "My Profile" },
+    { to: "/dashboard", icon: <FaUser />, text: "My Profile" },
     { to: "add-property", icon: <FaPlus />, text: "Add Property" },
     { to: "my-properties", icon: <FaBuilding />, text: "My Properties" },
     {
@@ -41,7 +41,7 @@ const DashboardLayout = () => {
   ];
 
   const adminNavLinks = [
-    { to: "/", icon: <FaUserShield />, text: "My Profile" },
+    { to: "/dashboard", icon: <FaUserShield />, text: "My Profile" },
     {
       to: "reported-properties",
       icon: <FaFlag />,
@@ -66,7 +66,7 @@ const DashboardLayout = () => {
   ];
 
   const userNavLinks = [
-    { to: "", icon: <FaUserCircle />, text: "My Profile" },
+    { to:"/dashboard",icon: <FaUserCircle />, text: "My Profile" },
     { to: "wishlist", icon: <FaHeart />, text: "My Wish List" },
     {
       to: "bought",

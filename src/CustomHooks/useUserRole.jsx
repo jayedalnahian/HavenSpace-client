@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosInterceptor from "./useAxiosInterceptor";
 import useAuth from "./useAuth";
-import axios from "axios";
+
 
 const useUserRole = () => {
   const axiosSecure = useAxiosInterceptor();
@@ -28,7 +28,7 @@ const useUserRole = () => {
     staleTime: 5 * 60 * 1000,
   });
   
-  console.log(role);
+  // console.log(role);
   
 
   return { 

@@ -17,13 +17,17 @@ import useAuth from "../../CustomHooks/useAuth";
 import useAddToWishlist from "../../CustomHooks/useAddToWishlist";
 import Swal from "sweetalert2";
 import useAxiosInterceptor from "../../CustomHooks/useAxiosInterceptor";
+import useUserRole from "../../CustomHooks/useUserRole";
 
 const PropertyDetailsPage = () => {
   const [btnOn, setBtnOn] = useState(true);
   const { id } = useParams();
   const { property, isLoading, error } = useSingleProperty(id);
+  const { role, isLoading: roleLoading } = useUserRole();
+  console.log(role);
+
   const { user } = useAuth();
-  const axiosSecure = useAxiosInterceptor()
+  const axiosSecure = useAxiosInterceptor();
 
   const { addToWishlist, isPending, isSuccess } = useAddToWishlist();
 
@@ -43,23 +47,18 @@ const PropertyDetailsPage = () => {
   };
 
   const paymentProccess = async () => {
-        
-          const res = await axiosSecure.post(
-            "/api/payment/create-checkout-session",
-            {
-              property: property,
-            }
-          );
+    const res = await axiosSecure.post("/api/payment/create-checkout-session", {
+      property: property,
+    });
 
-          if (res.data?.url) {
-            console.log(res.data?.url);
-            
-            window.location.href = res.data.url; // redirect to Stripe hosted checkout
-          }
-        
-      };
+    if (res.data?.url) {
+      console.log(res.data?.url);
 
-  if (isLoading) {
+      window.location.href = res.data.url; // redirect to Stripe hosted checkout
+    }
+  };
+
+  if (isLoading || roleLoading) {
     return (
       <div className="flex justify-center items-center h-screen bg-background">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
@@ -193,7 +192,7 @@ const PropertyDetailsPage = () => {
                   {property.maxPrice &&
                     ` - $${property.maxPrice.toLocaleString()}`}
                 </div>
-                <div className="text-sm text-gray-500 mt-1">
+                <div className="text-sm rounded-full mt-1 btn btn-sm bg-red-500 text-white">
                   {property.availability || "Availability not specified"}
                 </div>
               </div>
@@ -219,25 +218,29 @@ const PropertyDetailsPage = () => {
                 </div>
               </div>
 
-              <div className="space-y-3">
-                <button
-                  onClick={paymentProccess}
-                  className="w-full bg-primary hover:bg-primary-dark text-white font-medium py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center"
-                >
-                  <FaShoppingCart className="mr-2" />
-                  Buy Now
-                </button>
-                <button
-                  onClick={handleAddToWishlist}
-                  disabled={!btnOn || isPending || isSuccess} // ← use btnOn here
-                  className={`w-full bg-secondary hover:bg-secondary-dark text-text font-medium py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center ${
-                    isSuccess ? "bg-green-500 hover:bg-green-600" : ""
-                  } ${!btnOn ? "opacity-50 cursor-not-allowed" : ""}`} // Optional: Add visual cue
-                >
-                  <FaHeart className="mr-2" />
-                  {isSuccess ? "Added to Wishlist!" : "Add To Wish List"}
-                </button>
-              </div>
+              {role === "user" ? (
+                <div className="space-y-3">
+                  <button
+                    onClick={paymentProccess}
+                    className="w-full bg-primary hover:bg-primary-dark text-white font-medium py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center"
+                  >
+                    <FaShoppingCart className="mr-2" />
+                    Buy Now
+                  </button>
+                  <button
+                    onClick={handleAddToWishlist}
+                    disabled={!btnOn || isPending || isSuccess} // ← use btnOn here
+                    className={`w-full bg-secondary hover:bg-secondary-dark text-text font-medium py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center ${
+                      isSuccess ? "bg-green-500 hover:bg-green-600" : ""
+                    } ${!btnOn ? "opacity-50 cursor-not-allowed" : ""}`} // Optional: Add visual cue
+                  >
+                    <FaHeart className="mr-2" />
+                    {isSuccess ? "Added to Wishlist!" : "Add To Wish List"}
+                  </button>
+                </div>
+              ) : (
+                <div></div>
+              )}
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useNavigate } from "react-router";
 import useWishlishtPropertys from "../CustomHooks/useWishlishtPropertys";
@@ -6,11 +6,13 @@ import Swal from "sweetalert2";
 import useDeleteFromWishlist from "../CustomHooks/useDeleteFromWishlist";
 
 const UserWishList = () => {
-  const [sortBy, setSortBy] = useState("dateAdded");
-  const navigate = useNavigate();
   const { properties, isLoading, error, refetch } = useWishlishtPropertys();
-  const { mutate: deleteProperty, isPending } = useDeleteFromWishlist()
-
+  refetch();
+  // const [sortBy, setSortBy] = useState("dateAdded");
+  const navigate = useNavigate();
+  
+  const { mutate: deleteProperty, isPending } = useDeleteFromWishlist();
+  
   // Mock user ID - in a real app, this would come from auth context
 
   // Mock fetch function - replace with actual API call
@@ -87,23 +89,22 @@ const UserWishList = () => {
 
   const handleDelete = (id) => {
     console.log(id);
-    
+
     Swal.fire({
-          title: "Are you sure?",
-          text: "This action cannot be undone!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#48A6A7",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, delete it!",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            deleteProperty(id);
-            
-            
-            refetch()
-          }
-        });
+      title: "Are you sure?",
+      text: "This action cannot be undone!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#48A6A7",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteProperty(id);
+
+        refetch();
+      }
+    });
   };
 
   if (isLoading) {

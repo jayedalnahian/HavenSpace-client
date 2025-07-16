@@ -18,8 +18,8 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import useSoldPropertys from "../CustomHooks/useSoldPropertys";
 import { Link } from "react-router";
+import useAgentSoldPropertys from "../CustomHooks/useAgentSoldPropertys";
 
 const SoldProperties = () => {
   const {
@@ -27,7 +27,7 @@ const SoldProperties = () => {
     isLoading,
     error,
     refetch,
-  } = useSoldPropertys();
+  } = useAgentSoldPropertys();
   refetch();
   console.log(soldProperties);
 
