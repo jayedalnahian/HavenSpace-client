@@ -3,10 +3,9 @@ import { FaStar, FaRegStar, FaPlus } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import useAuth from "../CustomHooks/useAuth";
 import useUserData from "../CustomHooks/useUserData";
-import ReviewModal from "./ReviewModal"
+import ReviewModal from "./ReviewModal";
 import useHomeReviews from "../CustomHooks/useHomeReviews";
 import usePostHomeReviews from "../CustomHooks/usePostHomeReviews";
-
 
 const StarRating = ({ rating }) => {
   return (
@@ -90,10 +89,10 @@ const AddReviewCard = ({ onClick }) => {
 };
 
 const HomeReviews = () => {
-  const {reviews, isLoading: loadingReviews, refetch} = useHomeReviews()
+  const { reviews, isLoading: loadingReviews, refetch } = useHomeReviews();
   const { user } = useAuth();
   const [showReviewModal, setShowReviewModal] = useState(false);
-  const { postReview, isPending: isPostingReview} = usePostHomeReviews()
+  const { postReview, isPending: isPostingReview } = usePostHomeReviews();
   const { userData, isLoading } = useUserData();
   console.log(reviews);
 

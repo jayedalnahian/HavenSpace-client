@@ -14,7 +14,7 @@ import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const RequestedProperties = () => {
+const RequestedPropertys = () => {
   // Mock data for property requests
   const initialRequests = [
     {
@@ -622,4 +622,4 @@ const RequestedProperties = () => {
   );
 };
 
-export default RequestedProperties;
+export default RequestedPropertys;

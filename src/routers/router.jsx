@@ -7,7 +7,7 @@ import RegisterPage from "../pages/Register/RegisterPage";
 import AddProperty from "../AgentPages/AddProperty";
 import MyProperties from "../AgentPages/MyProperties";
 import SoldProperties from "../AgentPages/SoldProperties";
-import RequestedProperties from "../AgentPages/RequestedProperties";
+import RequestedPropertys from "../AgentPages/RequestedPropertys";
 import UserWishList from "../UserPages/UserWishList";
 import UserBought from "../UserPages/UserBought";
 import ManageUsers from "../AdminPages/ManageUsers";
@@ -22,6 +22,7 @@ import AllPropertiesPage from "../pages/AllProperties/AllPropertiesPage";
 import Profile from "../AgentPages/Profile";
 import PaymentSuccessPage from "../pages/PropertyDetails/PaymentSuccessPage";
 import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout";
+import MakeOfferPage from "../pages/MakeOfferPage/MakeOfferPage";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
         element: <AllPropertiesPage></AllPropertiesPage>,
       },
       {
+        path: "make-offer/:id",
+        element: <MakeOfferPage></MakeOfferPage>,
+      },
+      {
         path: "/dashboard",
         element: <DashboardLayout></DashboardLayout>,
         children: [
@@ -69,7 +74,7 @@ const router = createBrowserRouter([
           },
           {
             path: "requests",
-            element: <RequestedProperties></RequestedProperties>,
+            element: <RequestedPropertys></RequestedPropertys>,
           },
           {
             path: "manage-users",
