@@ -12,7 +12,7 @@ const useSoldPropertys = () => {
     error,
     refetch
   } = useQuery({
-    queryKey: ["properties"],
+    queryKey: ["SoldProperties"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/api/properties/sold?agentId=${user.uid}`);
 

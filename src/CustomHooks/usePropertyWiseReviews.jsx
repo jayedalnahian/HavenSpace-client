@@ -1,26 +1,30 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosInterceptor from "./useAxiosInterceptor";
 
-const useAllProperties = () => {
+
+const usePropertyWiseReviews = (id) => {
   const axiosSecure = useAxiosInterceptor();
-  
+
   const {
-    data: properties,
+    data: reviews,
     isLoading,
     error,
     refetch
   } = useQuery({
-    queryKey: ["AllProperties"],
+    queryKey: ["propertiesReviews"],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/api/properties`);
+      const res = await axiosSecure.get(`/api/reviews?propertyId=${id}`);
 
       return res.data;
     },
     staleTime: 5 * 60 * 1000,
   });
  
+console.log(reviews);
+console.log(id);
 
-  return { properties, isLoading, error, refetch};
+
+  return {reviews, isLoading, error, refetch};
 };
 
-export default useAllProperties;
+export default usePropertyWiseReviews;

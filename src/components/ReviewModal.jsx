@@ -10,14 +10,14 @@ const ReviewModal = ({ property, onClose, onSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit({
-      propertyId: property._id,
+      propertyId: property?._id || "Website Review",
       rating,
       text: reviewText,
-      agentId: property.agentId,
+      agentId: property?.agentId || "Website Review",
       submittedAt: new Date().toISOString(),
       userUID: user?.uid,
-      propertyIMG: property.image,
-      title: property.title
+      propertyIMG: property?.image || "https://i.ibb.co/BVw0FrjZ/review-icon-in-simple-line-style-isolated-on-white-background-vector.jpg",
+      title: property?.title || "Website Review"
     });
   };
 
@@ -41,8 +41,8 @@ const ReviewModal = ({ property, onClose, onSubmit }) => {
         </div>
         
         <div className="mb-4">
-          <h4 className="font-medium text-gray-800">{property.title}</h4>
-          <p className="text-sm text-gray-600">{property.location}</p>
+          <h4 className="font-medium text-gray-800">{property?.title}</h4>
+          <p className="text-sm text-gray-600">{property?.location}</p>
         </div>
         
         <form onSubmit={handleSubmit}>

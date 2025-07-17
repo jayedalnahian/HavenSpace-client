@@ -3,7 +3,7 @@ import MainLayout from "../layouts/MainLayouts/MainLayout";
 import HomePage from "../pages/Home/HomePage";
 import LoginPage from "../pages/Login/LoginPage";
 import RegisterPage from "../pages/Register/RegisterPage";
-import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout";
+
 import AddProperty from "../AgentPages/AddProperty";
 import MyProperties from "../AgentPages/MyProperties";
 import SoldProperties from "../AgentPages/SoldProperties";
@@ -21,6 +21,7 @@ import EditPropertyDetails from "../pages/PropertyDetails/EditPropertyDetails";
 import AllPropertiesPage from "../pages/AllProperties/AllPropertiesPage";
 import Profile from "../AgentPages/Profile";
 import PaymentSuccessPage from "../pages/PropertyDetails/PaymentSuccessPage";
+import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout";
 
 const router = createBrowserRouter([
   {

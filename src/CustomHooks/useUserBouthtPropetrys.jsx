@@ -12,7 +12,7 @@ const useUserBouthtPropetrys = () => {
     error,
     refetch
   } = useQuery({
-    queryKey: ["properties"],
+    queryKey: ["userBoughtProperties"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/api/sold-properties?userUid=${user.uid}`);
 

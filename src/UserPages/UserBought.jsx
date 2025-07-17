@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { data, useNavigate } from "react-router";
-import ReviewModal from "./ReviewModal";
 import useUserBouthtPropetrys from "../CustomHooks/useUserBouthtPropetrys";
 import usePostReviews from "../CustomHooks/usePostReviews";
 import useAuth from "../CustomHooks/useAuth";
+import ReviewModal from "../components/ReviewModal";
 
 const UserBought = () => {
   const [selectedProperty, setSelectedProperty] = useState(null);

@@ -12,7 +12,7 @@ const useUserReviews = () => {
     error,
     refetch
   } = useQuery({
-    queryKey: ["properties"],
+    queryKey: ["userReviews"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/api/reviews?userUid=${user.uid}`);
 

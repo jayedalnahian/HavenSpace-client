@@ -18,6 +18,8 @@ import useAddToWishlist from "../../CustomHooks/useAddToWishlist";
 import Swal from "sweetalert2";
 import useAxiosInterceptor from "../../CustomHooks/useAxiosInterceptor";
 import useUserRole from "../../CustomHooks/useUserRole";
+import LatestReviews from "../../components/LatestReviews";
+
 
 const PropertyDetailsPage = () => {
   const [btnOn, setBtnOn] = useState(true);
@@ -243,6 +245,10 @@ const PropertyDetailsPage = () => {
               )}
             </div>
           </div>
+        </div>
+        <div >
+          <LatestReviews property={ property }></LatestReviews>
+
         </div>
       </div>
     </div>

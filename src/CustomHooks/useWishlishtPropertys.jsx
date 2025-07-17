@@ -12,7 +12,7 @@ const useWishlishtPropertys = () => {
     error,
     refetch
   } = useQuery({
-    queryKey: ["properties"],
+    queryKey: ["WishListPropertys"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/api/wishlist-properties?uid=${user?.uid}`);
 

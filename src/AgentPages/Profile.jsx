@@ -19,19 +19,8 @@ const Profile = () => {
   const { userData, isLoading, error, refetch } = useUserData();
   // console.log(userData);
 
-  const defaultUserData = {
-    profilePicture: null,
-    fullName: "John Doe",
-    email: "john.doe@havenspace.com",
-    phone: "+1 (555) 123-4567",
-    country: "United States",
-    dateOfBirth: "1985-05-15",
-    role: "user", // 'admin', 'agent', or 'user'
-    createdAt: "2023-01-10T08:30:00Z",
-    lastLogin: "2023-06-15T14:45:00Z",
-  };
 
-  const data = userData || defaultUserData;
+  const data = userData;
   // console.log("data", data);
 
   const getRoleIcon = () => {
