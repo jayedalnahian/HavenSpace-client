@@ -17,6 +17,8 @@ const MakeOfferPage = () => {
   const [buyingDate, setBuyingDate] = useState("");
   const [formError, setFormError] = useState("");
   const { makeOffer, isPending } = usePostMakeOffer();
+  console.log(currentUser);
+  
   const handleSubmit = (e) => {
     e.preventDefault();
 
