@@ -21,7 +21,6 @@ import {
 import useUserRole from "../../CustomHooks/useUserRole";
 import LoadingSpinner from "../../components/LoadingSpinner";
 
-
 const DashboardLayout = () => {
   // Define all navigation options
   const agentNavLinks = [
@@ -41,32 +40,30 @@ const DashboardLayout = () => {
   ];
 
   const adminNavLinks = [
-    { to: "/dashboard", icon: <FaUserShield />, text: "My Profile" },
     {
-      to: "reported-properties",
-      icon: <FaFlag />,
-      text: "Reported Properties",
-    },
-    {
-      to: "advertise-properties",
-      icon: <FaBullhorn />,
-      text: "Advertise Properties",
-    },
-    {
-      to: "manage-reviews",
-      icon: <FaCheckCircle />,
-      text: "Manage Reviews",
+      to: "/dashboard",
+      icon: <FaUserShield />,
+      text: "My Profile",
     },
     {
       to: "manage-properties",
       icon: <FaClipboardList />,
       text: "Manage Properties",
     },
-    { to: "manage-users", icon: <FaUsers />, text: "Manage Users" },
+    {
+      to: "manage-users",
+      icon: <FaUsers />,
+      text: "Manage Users",
+    },
+    {
+      to: "manage-reviews",
+      icon: <FaCheckCircle />,
+      text: "Manage Reviews",
+    },
   ];
 
   const userNavLinks = [
-    { to:"/dashboard",icon: <FaUserCircle />, text: "My Profile" },
+    { to: "/dashboard", icon: <FaUserCircle />, text: "My Profile" },
     { to: "wishlist", icon: <FaHeart />, text: "My Wish List" },
     {
       to: "bought",
@@ -78,8 +75,6 @@ const DashboardLayout = () => {
 
   const [navLinks, setNavLinks] = useState([]);
   const { role, isLoading, error } = useUserRole();
-  
-  
 
   useEffect(() => {
     if (role === "admin") {
@@ -103,7 +98,7 @@ const DashboardLayout = () => {
     <div className="min-h-screen" style={{ backgroundColor: "#F2EFE7" }}>
       <div className="drawer lg:drawer-open">
         <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-        
+
         {/* Page content */}
         <div className="drawer-content">
           {/* Mobile navbar */}

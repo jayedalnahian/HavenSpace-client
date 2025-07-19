@@ -3,7 +3,6 @@ import MainLayout from "../layouts/MainLayouts/MainLayout";
 import HomePage from "../pages/Home/HomePage";
 import LoginPage from "../pages/Login/LoginPage";
 import RegisterPage from "../pages/Register/RegisterPage";
-
 import AddProperty from "../AgentPages/AddProperty";
 import MyProperties from "../AgentPages/MyProperties";
 import SoldProperties from "../AgentPages/SoldProperties";
@@ -13,8 +12,6 @@ import UserBought from "../UserPages/UserBought";
 import ManageUsers from "../AdminPages/ManageUsers";
 import ManageProperties from "../AdminPages/ManageProperties";
 import ManageReviews from "../AdminPages/ManageReviews";
-import ReportedProperties from "../AdminPages/ReportedProperties";
-import AdvertiseProperties from "../AdminPages/AdvertiseProperties";
 import UserMyReviews from "../UserPages/UserMyReviews";
 import PropertyDetailsPage from "../pages/PropertyDetails/PropertyDetailsPage";
 import EditPropertyDetails from "../pages/PropertyDetails/EditPropertyDetails";
@@ -87,14 +84,6 @@ const router = createBrowserRouter([
           {
             path: "manage-reviews",
             element: <ManageReviews></ManageReviews>,
-          },
-          {
-            path: "advertise-properties",
-            element: <AdvertiseProperties></AdvertiseProperties>,
-          },
-          {
-            path: "reported-properties",
-            element: <ReportedProperties></ReportedProperties>,
           },
           {
             path: "wishlist",

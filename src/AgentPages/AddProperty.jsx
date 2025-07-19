@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import useAxiosInterceptor from "../CustomHooks/useAxiosInterceptor";
 import Swal from "sweetalert2";
 import useAuth from "../CustomHooks/useAuth";
+import useUserData from "../CustomHooks/useUserData";
 
 const IMGBB_API_KEY = "2e1c7fe21ce6c1d4a08100cd99fc90f8";
 const IMGBB_API_URL = "https://api.imgbb.com/1/upload";
@@ -14,6 +15,7 @@ const AddProperty = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
   const axiosInterceptor = useAxiosInterceptor();
+  const {userData} = useUserData()
   const { user } = useAuth();
   // console.log(user);
 
@@ -128,7 +130,7 @@ const AddProperty = () => {
         features: formData.features || [],
         image: imageUrl,
         availability: formData.availability,
-        creatorName: formData.agentName,
+        creatorName: userData?.name,
         creatorEmail: user.email,
         creatorUID: user.uid,
         createdAt: new Date().toISOString(),
@@ -139,6 +141,7 @@ const AddProperty = () => {
         requestedUserData: [],
         soldStatus: "false",
         soldDetails: {},
+        adminApproval: "pending"
       };
 
       // 3. API call to your backend

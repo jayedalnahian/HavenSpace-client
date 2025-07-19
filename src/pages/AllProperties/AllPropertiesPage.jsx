@@ -2,8 +2,8 @@ import { motion } from "framer-motion";
 import { Link } from "react-router";
 import { FiHome, FiMapPin, FiDollarSign } from "react-icons/fi";
 import { FaBed, FaBath, FaRulerCombined } from "react-icons/fa";
-import useAllProperties from "../../CustomHooks/useAllProperties";
 import LoadingSpinner from "../../components/LoadingSpinner";
+import useAllApprovedPropertys from "../../CustomHooks/useAllApprovedPropertys";
 
 const propertyCardVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -85,7 +85,7 @@ const PropertyCard = ({ property }) => {
 };
 
 const AllPropertiesPage = () => {
-  const { properties = [], isLoading, error, refetch } = useAllProperties();
+  const { properties = [], isLoading, error, refetch } = useAllApprovedPropertys();
   refetch();
   if (isLoading) {
     return (
