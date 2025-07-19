@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   FaEnvelope,
   FaCheck,
@@ -10,14 +10,19 @@ import {
 } from "react-icons/fa";
 import { motion } from "framer-motion";
 import "react-toastify/dist/ReactToastify.css";
-import useGetOffersForAgent from "../CustomHooks/useGetOffersForAgent";
 import { Link } from "react-router";
-import useUpdateOfferStatus from "../CustomHooks/useUpdateOfferStatus";
 import Swal from "sweetalert2";
+import useRequestedProperties from "../CustomHooks/useRequestedProperties";
+import useUpdateRequestStatus from "../CustomHooks/useUpdateRequestStatus";
+import useAcceptPropertyRequest from "../CustomHooks/useAcceptPropertyRequest";
 
 const RequestedProperties = () => {
-  const { updateOfferStatus } = useUpdateOfferStatus();
-  const { properties, isLoading, error, refetch } = useGetOffersForAgent();
+  const { requestedProperties, isLoading, error, refetch } =
+    useRequestedProperties("pending");
+  const { mutate: updateRequestStatus } = useUpdateRequestStatus();
+  
+  const { mutate: acceptRequest, isLoading: isAccepting } =
+    useAcceptPropertyRequest();
 
   const getStatusBadgeClass = (status) => {
     switch (status) {
@@ -32,31 +37,28 @@ const RequestedProperties = () => {
     }
   };
 
-  const updateRejectStatus = (offerId, newStatus) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        updateOfferStatus({ offerId, status: newStatus });
-        refetch()
-        Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
-          icon: "success",
-        });
-      }
+  const handleRejectRequest = (userEmailToRemove, propertyId) => {
+    updateRequestStatus({
+      propertyId,
+      requestStatus: "normal",
+      userEmailToRemove,
     });
   };
 
-  const updateRequestStatus = (offerId, newStatus) => {
-    updateOfferStatus({ offerId, status: newStatus });
-    refetch()
+  const handleAccept = (propertyId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You are about to accept this property request",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#006A71",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, accept it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        acceptRequest(propertyId);
+      }
+    });
   };
 
   const handleEmailResponse = (email) => {
@@ -109,7 +111,7 @@ const RequestedProperties = () => {
 
         {/* Desktop View */}
         <div className="hidden md:block">
-          {properties.length > 0 ? (
+          {requestedProperties.length > 0 ? (
             <div className="bg-white rounded-2xl shadow-md overflow-hidden">
               <table className="w-full divide-y divide-gray-200">
                 <thead style={{ backgroundColor: "#9ACBD0" }}>
@@ -132,126 +134,132 @@ const RequestedProperties = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {properties.map((request) => (
-                    <motion.tr
-                      key={request._id}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <td className="px-6 py-4">
-                        <div className="flex items-center">
-                          <img
-                            src={request.property.image}
-                            alt=""
-                            className="h-16 w-16 rounded-lg object-cover mr-4"
-                          />
-                          <div>
-                            <div className="text-sm font-medium text-[#006A71]">
-                              {request.property.title}
-                            </div>
-                            <div className="text-sm text-[#48A6A7] flex items-center">
-                              <FaMapMarkerAlt className="mr-1" size={12} />
-                              {request.property.location}
-                            </div>
-                            <div className="text-sm">
-                              ${request.property.minPrice} - $
-                              {request.property.maxPrice}
+                  {requestedProperties.map((property) => {
+                    // Find the request with user data (skipping empty objects)
+                    const request = property.requestedUserData.find(
+                      (item) => item && item.email
+                    );
+
+                    if (!request) return null;
+
+                    return (
+                      <motion.tr
+                        key={property._id}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <td className="px-6 py-4">
+                          <div className="flex items-center">
+                            <img
+                              src={property.image}
+                              alt={property.title}
+                              className="h-16 w-16 rounded-lg object-cover mr-4"
+                            />
+                            <div>
+                              <div className="text-sm font-medium text-[#006A71]">
+                                {property.title}
+                              </div>
+                              <div className="text-sm text-[#48A6A7] flex items-center">
+                                <FaMapMarkerAlt className="mr-1" size={12} />
+                                {property.location}
+                              </div>
+                              <div className="text-sm">
+                                ${property.minPrice} - ${property.maxPrice}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="text-sm font-medium text-[#006A71]">
-                          {request.buyer.name ||
-                            request.buyer.email.split("@")[0]}
-                        </div>
-                        <div className="text-sm text-[#48A6A7]">
-                          {request.buyer.email}
-                        </div>
-                        <div className="text-sm">
-                          {request.buyer.phone || "N/A"}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-sm">
-                        <div className="font-medium">
-                          Offer: ${request.offerDetails.amount}
-                        </div>
-                        <div className="flex items-center mt-1">
-                          <FaCalendarAlt className="mr-2 text-[#9ACBD0]" />
-                          {new Date(
-                            request.offerDetails.buyingDate
-                          ).toLocaleDateString()}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <span
-                          className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusBadgeClass(
-                            request.status
-                          )}`}
-                        >
-                          {request.status}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="flex flex-wrap gap-2">
-                          {request.status === "Pending" && (
-                            <>
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="text-sm font-medium text-[#006A71]">
+                            {request.name || request.email.split("@")[0]}
+                          </div>
+                          <div className="text-sm text-[#48A6A7]">
+                            {request.email}
+                          </div>
+                          <div className="text-sm">
+                            {request.phone || "N/A"}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 text-sm">
+                          <div className="font-medium">
+                            Offer: ${request.offerAmount}
+                          </div>
+                          <div className="flex items-center mt-1">
+                            <FaCalendarAlt className="mr-2 text-[#9ACBD0]" />
+                            {new Date(
+                              request.selectedDate
+                            ).toLocaleDateString()}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4">
+                          <span
+                            className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusBadgeClass(
+                              property.requestStatus
+                            )}`}
+                          >
+                            {property.requestStatus}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="flex flex-wrap gap-2">
+                            {property.requestStatus === "pending" && (
+                              <>
+                                <button
+                                  onClick={() => handleAccept(property._id)}
+                                  className="flex items-center px-3 py-1 rounded-lg text-xs font-medium"
+                                  style={{
+                                    backgroundColor: "#48A6A7",
+                                    color: "#F2EFE7",
+                                  }}
+                                >
+                                  <FaCheck className="mr-1" /> Accept
+                                </button>
+                                <button
+                                  className="flex items-center px-3 py-1 rounded-lg text-xs font-medium"
+                                  style={{
+                                    backgroundColor: "#FFFFFF",
+                                    color: "#006A71",
+                                    border: "1px solid #006A71",
+                                  }}
+                                  onClick={() =>
+                                    handleRejectRequest(
+                                      request.email,
+                                      property._id
+                                    )
+                                  }
+                                >
+                                  <FaTimes className="mr-1" /> Reject
+                                </button>
+                              </>
+                            )}
+                            <button
+                              onClick={() => handleEmailResponse(request.email)}
+                              className="flex items-center px-3 py-1 rounded-lg text-xs font-medium"
+                              style={{
+                                backgroundColor: "#9ACBD0",
+                                color: "#006A71",
+                              }}
+                            >
+                              <FaEnvelope className="mr-1" /> Email
+                            </button>
+                            <Link to={`/propertyDetails/${property._id}`}>
                               <button
-                                onClick={() =>
-                                  updateRequestStatus(request._id, "Accepted")
-                                }
-                                className="flex items-center px-3 py-1 rounded-lg text-xs font-medium"
-                                style={{
-                                  backgroundColor: "#48A6A7",
-                                  color: "#F2EFE7",
-                                }}
-                              >
-                                <FaCheck className="mr-1" /> Accept
-                              </button>
-                              <button
-                                onClick={() =>
-                                  updateRejectStatus(request._id, "Rejected")
-                                }
                                 className="flex items-center px-3 py-1 rounded-lg text-xs font-medium"
                                 style={{
                                   backgroundColor: "#FFFFFF",
-                                  color: "#006A71",
-                                  border: "1px solid #006A71",
+                                  color: "#48A6A7",
+                                  border: "1px solid #48A6A7",
                                 }}
                               >
-                                <FaTimes className="mr-1" /> Reject
+                                <FaEye className="mr-1" /> View
                               </button>
-                            </>
-                          )}
-                          <button
-                            onClick={() =>
-                              handleEmailResponse(request.buyer.email)
-                            }
-                            className="flex items-center px-3 py-1 rounded-lg text-xs font-medium"
-                            style={{
-                              backgroundColor: "#9ACBD0",
-                              color: "#006A71",
-                            }}
-                          >
-                            <FaEnvelope className="mr-1" /> Email
-                          </button>
-                          <Link to={`/propertyDetails/${request.property._id}`}>
-                            <button
-                              className="flex items-center px-3 py-1 rounded-lg text-xs font-medium"
-                              style={{
-                                backgroundColor: "#FFFFFF",
-                                color: "#48A6A7",
-                                border: "1px solid #48A6A7",
-                              }}
-                            >
-                              <FaEye className="mr-1" /> View
-                            </button>
-                          </Link>
-                        </div>
-                      </td>
-                    </motion.tr>
-                  ))}
+                            </Link>
+                          </div>
+                        </td>
+                      </motion.tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>

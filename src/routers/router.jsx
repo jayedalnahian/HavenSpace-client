@@ -41,7 +41,7 @@ const router = createBrowserRouter([
         element: <EditPropertyDetails></EditPropertyDetails>,
       },
       {
-        path: "/payment-success/:id",
+        path: "/payment-success",
         element: <PaymentSuccessPage></PaymentSuccessPage>
       },
       {

@@ -5,20 +5,20 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { useState } from "react";
 import useSingleProperty from "../../CustomHooks/useSingleProperty";
 import useAuth from "../../CustomHooks/useAuth";
-import Swal from "sweetalert2";
-import usePostMakeOffer from "../../CustomHooks/usePostMakeOffer";
+import useUserData from "../../CustomHooks/useUserData";
+import useSendOffer from "../../CustomHooks/useSendOffer";
 
 const MakeOfferPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { user: currentUser } = useAuth(); // Get authenticated user
+  const { user: currentUser } = useAuth();
   const { property, isLoading, error: propertyError } = useSingleProperty(id);
+  const { userData, isUserLoading} = useUserData()
   const [offerAmount, setOfferAmount] = useState("");
   const [buyingDate, setBuyingDate] = useState("");
   const [formError, setFormError] = useState("");
-  const { makeOffer, isPending } = usePostMakeOffer();
-  console.log(currentUser);
-  
+  const { sendOffer, isPending: isSendOfferPending} = useSendOffer()
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -42,36 +42,29 @@ const MakeOfferPage = () => {
     }
 
     // Prepare the offer data
-    const offerData = {
-      property: {
-        _id: property._id,
-        title: property.title,
-        location: property.location,
-        image: property.image,
-        minPrice: property.minPrice,
-        maxPrice: property.maxPrice,
-      },
-      buyer: {
-        id: currentUser.uid,
-        name: currentUser.displayName,
-        email: currentUser.email,
-        phone: currentUser.phoneNumber || "N/A",
-      },
-      offerDetails: {
-        amount: parseFloat(offerAmount),
-        buyingDate,
-        message: "Offer submitted through website",
-      },
-      requestDate: new Date().toISOString(),
-      status: "Pending",
-      agentId: property.agentId,
-      agentEmail: property.agentEmail,
+
+    const userRequestData = {
+      email: userData.email,
+      name: userData.name,
+      phone: userData.phone,
+      photo: userData.photo,
+      role: userData.role,
+      uid: userData.uid,
+      _id: userData._id,
+      selectedDate: selectedDate,
+      offerAmount: offerAmount
     };
-    makeOffer(offerData);
-    navigate("/dashboard/wishlist");
+    console.log(id);
+    
+    
+    
+    sendOffer({ propertyId: id, userRequestData });
+
+  
+    
   };
 
-  if (isLoading) {
+  if (isLoading || isUserLoading) {
     return (
       <div className="flex justify-center items-center min-h-[50vh]">
         <div className="animate-pulse flex flex-col items-center">
@@ -140,10 +133,7 @@ const MakeOfferPage = () => {
               <div className="flex items-center text-gray-600 mb-3">
                 <MdPerson className="mr-1 text-gray-500" />
                 <span>
-                  Agent:{" "}
-                  {property.agentEmail?.split("@")[0] ||
-                    property.agentName ||
-                    "Unknown"}
+                  Owner: {property.creatorName || property.creatorEmail?.split("@")[0] || "Unknown"}
                 </span>
               </div>
               <div className="bg-gray-50 p-3 rounded-lg">
@@ -159,7 +149,7 @@ const MakeOfferPage = () => {
 
         <form onSubmit={handleSubmit} className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            {/* Readonly Property Info */}
+            {/* Property Info */}
             <div className="space-y-1">
               <label className="block text-sm font-medium text-gray-700">
                 Property Title
@@ -167,6 +157,18 @@ const MakeOfferPage = () => {
               <input
                 type="text"
                 value={property.title || ""}
+                readOnly
+                className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-gray-700"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <label className="block text-sm font-medium text-gray-700">
+                Property Type
+              </label>
+              <input
+                type="text"
+                value={property.propertyType || ""}
                 readOnly
                 className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-gray-700"
               />
@@ -186,15 +188,11 @@ const MakeOfferPage = () => {
 
             <div className="space-y-1">
               <label className="block text-sm font-medium text-gray-700">
-                Agent Name
+                Property Owner
               </label>
               <input
                 type="text"
-                value={
-                  property.agentEmail?.split("@")[0] ||
-                  property.agentName ||
-                  "Unknown"
-                }
+                value={property.creatorName || property.creatorEmail?.split("@")[0] || "Unknown"}
                 readOnly
                 className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-gray-700"
               />
@@ -207,7 +205,7 @@ const MakeOfferPage = () => {
               </label>
               <input
                 type="text"
-                value={currentUser?.displayName || "Not available"}
+                value={ userData?.name || "Not available"}
                 readOnly
                 className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-gray-700"
               />
@@ -225,7 +223,7 @@ const MakeOfferPage = () => {
               />
             </div>
 
-            {/* Editable Fields */}
+            {/* Offer Fields */}
             <div className="space-y-1">
               <label className="block text-sm font-medium text-gray-700 flex items-center">
                 <MdAttachMoney className="mr-1" /> Offer Amount ($)
@@ -276,9 +274,18 @@ const MakeOfferPage = () => {
             </button>
             <button
               type="submit"
-              className="px-6 py-2 bg-primary hover:bg-primary-dark text-white font-medium rounded-lg transition-colors shadow-md hover:shadow-lg flex items-center"
+              disabled={isSendOfferPending}
+              className="px-6 py-2 bg-primary hover:bg-primary-dark text-white font-medium rounded-lg transition-colors shadow-md hover:shadow-lg flex items-center disabled:opacity-70"
             >
-              {isPending ? "Submitting..." : "Submit Offer"}
+              {isSendOfferPending ? (
+                <>
+                  <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Submitting...
+                </>
+              ) : "Submit Offer"}
             </button>
           </div>
         </form>

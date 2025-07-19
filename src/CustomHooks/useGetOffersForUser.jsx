@@ -2,21 +2,20 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosInterceptor from "./useAxiosInterceptor";
 import useAuth from "./useAuth";
 
-const useGetOffersForAgent = () => {
+const useGetOffersForUser = () => {
   const axiosSecure = useAxiosInterceptor();
   const { user } = useAuth();
 
 
   const {
-    data: properties,
+    data: offers,
     isLoading,
     error,
     refetch,
   } = useQuery({
-    queryKey: ["properties"],
+    queryKey: ["Offers"],
     queryFn: async () => {
-      const res = await axiosSecure.get(`api/offers?agentID=${user.uid}`);
-   
+      const res = await axiosSecure.get(`api/offers?userID=${user.uid}`);
 
       return res.data;
     },
@@ -24,8 +23,7 @@ const useGetOffersForAgent = () => {
   });
 
 
-
-  return { properties, isLoading, error, refetch };
+  return { offers, isLoading, error, refetch };
 };
 
-export default useGetOffersForAgent;
+export default useGetOffersForUser;

@@ -16,8 +16,6 @@ const AddProperty = () => {
   const axiosInterceptor = useAxiosInterceptor();
   const { user } = useAuth();
   // console.log(user);
-  
-
 
   // Mock agent data (replace with your actual context/state)
   const agentData = {
@@ -115,8 +113,7 @@ const AddProperty = () => {
       if (formData.imageFile) {
         imageUrl = await uploadImageToImgBB(formData.imageFile);
       }
-      
-      
+
       // 2. Prepare the final property data
       const propertyData = {
         title: formData.title,
@@ -131,10 +128,17 @@ const AddProperty = () => {
         features: formData.features || [],
         image: imageUrl,
         availability: formData.availability,
-        agentName: formData.agentName,
-        agentEmail: user.email,
-        agentId: user.uid,
+        creatorName: formData.agentName,
+        creatorEmail: user.email,
+        creatorUID: user.uid,
         createdAt: new Date().toISOString(),
+        advertiseStatus: "false",
+        wishlistStatus: "false",
+        wishlistUsersData: [],
+        requestStatus: "normal",
+        requestedUserData: [],
+        soldStatus: "false",
+        soldDetails: {},
       };
 
       // 3. API call to your backend

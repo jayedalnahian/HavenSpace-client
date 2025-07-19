@@ -13,54 +13,52 @@ import {
 } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
 import useSingleProperty from "../../CustomHooks/useSingleProperty";
-import useAuth from "../../CustomHooks/useAuth";
-import useAddToWishlist from "../../CustomHooks/useAddToWishlist";
-import Swal from "sweetalert2";
-import useAxiosInterceptor from "../../CustomHooks/useAxiosInterceptor";
 import useUserRole from "../../CustomHooks/useUserRole";
 import LatestReviews from "../../components/LatestReviews";
-
+import useUserData from "../../CustomHooks/useUserData";
+import useAddToWishlist from "../../CustomHooks/useAddToWishlist";
 
 const PropertyDetailsPage = () => {
-  const [btnOn, setBtnOn] = useState(true);
-  const { id } = useParams();
-  const { property, isLoading, error } = useSingleProperty(id);
+  const { mutate, isPending } = useAddToWishlist();
+
+  const { id: propertyId } = useParams();
+  const { property, isLoading } = useSingleProperty(propertyId);
   const { role, isLoading: roleLoading } = useUserRole();
-  console.log(role);
+  const { userData, isUserLoading, error } = useUserData();
 
-  const { user } = useAuth();
-  const axiosSecure = useAxiosInterceptor();
+  const alreadyInWishlist =
+    property?.wishlistUsersData?.some((user) => user?.uid === userData?.uid) ||
+    false;
 
-  const { addToWishlist, isPending, isSuccess } = useAddToWishlist();
+  console.log(property);
 
-  const handleAddToWishlist = () => {
-    const wishlistData = {
-      propertyId: id,
-      title: property?.title,
-      image: property?.image,
-      agentId: property?.agentId,
-      userEmail: user?.email,
-      useruid: user?.uid,
-      addedAt: new Date().toISOString(),
+  const handleAddToWishlist = async () => {
+    const user = {
+      email: userData.email,
+      name: userData.name,
+      phone: userData.phone,
+      photo: userData.photo,
+      role: userData.role,
+      uid: userData.uid,
+      _id: userData._id,
     };
-    addToWishlist(wishlistData);
-    setBtnOn(false);
-    console.log(wishlistData);
+
+    mutate({ propertyId, wishlistUser: user });
   };
 
-  const paymentProccess = async () => {
-    const res = await axiosSecure.post("/api/payment/create-checkout-session", {
-      property: property,
-    });
+  // const paymentProccess = async () => {
+  //   const res = await axiosSecure.post("/api/payment/create-checkout-session", {
+  //     property: property,
+  //   });
 
-    if (res.data?.url) {
-      console.log(res.data?.url);
+  //   if (res.data?.url) {
+  //     console.log(res.data?.url);
 
-      window.location.href = res.data.url; // redirect to Stripe hosted checkout
-    }
-  };
+  //     window.location.href = res.data.url; // redirect to Stripe hosted checkout
+  //   }
+  // };
 
-  if (isLoading || roleLoading) {
+  if (isLoading || roleLoading || isUserLoading) {
     return (
       <div className="flex justify-center items-center h-screen bg-background">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
@@ -222,22 +220,26 @@ const PropertyDetailsPage = () => {
 
               {role === "user" ? (
                 <div className="space-y-3">
-                  <button
+                  {/* <button
                     onClick={paymentProccess}
                     className="w-full bg-primary hover:bg-primary-dark text-white font-medium py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center"
                   >
                     <FaShoppingCart className="mr-2" />
                     Buy Now
-                  </button>
+                  </button> */}
                   <button
                     onClick={handleAddToWishlist}
-                    disabled={!btnOn || isPending || isSuccess} // ← use btnOn here
+                    disabled={alreadyInWishlist || isPending}
                     className={`w-full bg-secondary hover:bg-secondary-dark text-text font-medium py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center ${
-                      isSuccess ? "bg-green-500 hover:bg-green-600" : ""
-                    } ${!btnOn ? "opacity-50 cursor-not-allowed" : ""}`} // Optional: Add visual cue
+                      alreadyInWishlist || isPending
+                        ? "opacity-50 cursor-not-allowed"
+                        : ""
+                    }`}
                   >
                     <FaHeart className="mr-2" />
-                    {isSuccess ? "Added to Wishlist!" : "Add To Wish List"}
+                    {alreadyInWishlist
+                      ? "Already in Wishlist"
+                      : "Add To Wish List"}
                   </button>
                 </div>
               ) : (
@@ -246,9 +248,8 @@ const PropertyDetailsPage = () => {
             </div>
           </div>
         </div>
-        <div >
-          <LatestReviews property={ property }></LatestReviews>
-
+        <div>
+          <LatestReviews property={property}></LatestReviews>
         </div>
       </div>
     </div>

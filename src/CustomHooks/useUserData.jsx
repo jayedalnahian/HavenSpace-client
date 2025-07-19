@@ -8,7 +8,7 @@ const useUserData = () => {
 
   const {
     data: userData,
-    isLoading,
+    isLoading : isUserLoading,
     error,
     refetch
   } = useQuery({
@@ -20,9 +20,10 @@ const useUserData = () => {
     },
     staleTime: 5 * 60 * 1000,
   });
- 
 
-  return { userData, isLoading, error, refetch};
+  
+
+  return { userData, isUserLoading, error, refetch};
 };
 
 export default useUserData;

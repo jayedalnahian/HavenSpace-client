@@ -6,6 +6,8 @@ const useSingleProperty = (id) => {
  const { data: property, isLoading, error } = useQuery({
      queryKey: ["properties", id], // Include id in queryKey for proper caching
      queryFn: async () => {
+      console.log(id);
+      
        const res = await axiosSecure.get(`/api/properties/${id}`);
        return res.data;
      },

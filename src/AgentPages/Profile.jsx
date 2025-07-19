@@ -15,16 +15,12 @@ import {
 import useUserData from "../CustomHooks/useUserData";
 
 const Profile = () => {
-  // Default data structure if no props are passed
   const { userData, isLoading, error, refetch } = useUserData();
-  // console.log(userData);
-
-
-  const data = userData;
-  // console.log("data", data);
+ 
+  
 
   const getRoleIcon = () => {
-    switch (data.role) {
+    switch (userData?.role) {
       case "admin":
         return <FaUserShield className="text-[#48A6A7]" />;
       case "agent":
@@ -35,6 +31,7 @@ const Profile = () => {
   };
 
   const formatDate = (dateString) => {
+    if (!dateString) return "Not available";
     return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
@@ -42,75 +39,78 @@ const Profile = () => {
     });
   };
 
-  const formatDateTime = (dateString) => {
-    return new Date(dateString).toLocaleString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
-
   if (isLoading) {
     return (
-      <div
-        className="flex items-center justify-center min-h-screen"
-        style={{ backgroundColor: "#F2EFE7" }}
-      >
-        <FaSpinner
-          className="animate-spin text-4xl"
-          style={{ color: "#48A6A7" }}
-        />
+      <div className="flex items-center justify-center min-h-screen bg-[#F2EFE7]">
+        <FaSpinner className="animate-spin text-4xl text-[#48A6A7]" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-[#F2EFE7]">
+        <div className="text-center p-6 bg-white rounded-lg shadow-md max-w-md">
+          <h2 className="text-2xl font-bold text-[#006A71] mb-4">
+            Error Loading Profile
+          </h2>
+          <p className="text-gray-600 mb-6">{error.message}</p>
+          <button
+            onClick={refetch}
+            className="px-6 py-2 bg-[#48A6A7] hover:bg-[#006A71] text-white font-medium rounded-lg transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!userData) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-[#F2EFE7]">
+        <div className="text-center p-6 bg-white rounded-lg shadow-md max-w-md">
+          <h2 className="text-2xl font-bold text-[#006A71] mb-4">
+            No Profile Data Found
+          </h2>
+          <p className="text-gray-600 mb-6">
+            We couldn't find any profile information for your account.
+          </p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div
-      className="min-h-screen p-4 md:p-8"
-      style={{ backgroundColor: "#F2EFE7" }}
-    >
+    <div className="min-h-screen p-4 md:p-8 bg-[#F2EFE7]">
       <div className="max-w-4xl mx-auto">
-        <h1
-          className="text-3xl font-bold mb-6 text-center"
-          style={{ color: "#006A71" }}
-        >
+        <h1 className="text-3xl font-bold mb-6 text-center text-[#006A71]">
           My Profile
         </h1>
 
         <div className="bg-white rounded-2xl shadow-md overflow-hidden">
           {/* Profile Header */}
-          <div
-            className="p-6 text-center"
-            style={{ backgroundColor: "#9ACBD0" }}
-          >
+          <div className="p-6 text-center bg-[#9ACBD0]">
             <div className="flex justify-center mb-4">
-              {data.photo ? (
+              {userData.photo ? (
                 <img
-                  src={data.photo}
+                  src={userData.photo}
                   alt="Profile"
                   className="w-32 h-32 rounded-full object-cover border-4 border-white shadow-md"
                 />
               ) : (
-                <div
-                  className="w-32 h-32 rounded-full flex items-center justify-center border-4 border-white shadow-md"
-                  style={{ backgroundColor: "#48A6A7" }}
-                >
+                <div className="w-32 h-32 rounded-full flex items-center justify-center border-4 border-white shadow-md bg-[#48A6A7]">
                   <FaUser className="text-white text-5xl" />
                 </div>
               )}
             </div>
-            <h2 className="text-2xl font-bold" style={{ color: "#006A71" }}>
-              {data.name}
+            <h2 className="text-2xl font-bold text-[#006A71]">
+              {userData.name}
             </h2>
             <div className="flex items-center justify-center mt-2">
               {getRoleIcon()}
-              <span
-                className="ml-2 capitalize font-medium"
-                style={{ color: "#006A71" }}
-              >
-                {data.role}
+              <span className="ml-2 capitalize font-medium text-[#006A71]">
+                {userData.role}
               </span>
             </div>
           </div>
@@ -123,17 +123,17 @@ const Profile = () => {
                 <ProfileField
                   icon={<FaEnvelope />}
                   label="Email"
-                  value={data.email}
+                  value={userData.email}
                 />
                 <ProfileField
                   icon={<FaPhone />}
                   label="Phone"
-                  value={data.phone}
+                  value={userData.phone || "Not provided"}
                 />
                 <ProfileField
                   icon={<FaGlobe />}
                   label="Country"
-                  value={data.country}
+                  value={userData.country || "Not provided"}
                 />
               </div>
 
@@ -142,47 +142,31 @@ const Profile = () => {
                 <ProfileField
                   icon={<FaCalendarAlt />}
                   label="Date of Birth"
-                  value={formatDate(data.birth)}
+                  value={formatDate(userData.birth)}
                 />
                 <ProfileField
                   icon={<FaCalendarAlt />}
                   label="Member Since"
-                  value={formatDate(data.createdAt)}
+                  value={formatDate(userData.createdAt)}
                 />
-                
+                <ProfileField
+                  icon={<FaUser />}
+                  label="User ID"
+                  value={userData.uid}
+                />
               </div>
             </div>
 
             {/* Action Buttons */}
             <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
               <button
-                className="flex items-center justify-center px-6 py-3 rounded-lg font-medium transition-colors"
-                style={{
-                  backgroundColor: "#48A6A7",
-                  color: "#F2EFE7",
-                }}
-                onMouseOver={(e) =>
-                  (e.currentTarget.style.backgroundColor = "#006A71")
-                }
-                onMouseOut={(e) =>
-                  (e.currentTarget.style.backgroundColor = "#48A6A7")
-                }
+                className="flex items-center justify-center px-6 py-3 rounded-lg font-medium transition-colors bg-[#48A6A7] text-[#F2EFE7] hover:bg-[#006A71]"
               >
                 <FaEdit className="mr-2" />
                 Edit Profile
               </button>
               <button
-                className="flex items-center justify-center px-6 py-3 rounded-lg font-medium transition-colors"
-                style={{
-                  backgroundColor: "#9ACBD0",
-                  color: "#006A71",
-                }}
-                onMouseOver={(e) =>
-                  (e.currentTarget.style.backgroundColor = "#48A6A7")
-                }
-                onMouseOut={(e) =>
-                  (e.currentTarget.style.backgroundColor = "#9ACBD0")
-                }
+                className="flex items-center justify-center px-6 py-3 rounded-lg font-medium transition-colors bg-[#9ACBD0] text-[#006A71] hover:bg-[#48A6A7]"
               >
                 <FaKey className="mr-2" />
                 Change Password
@@ -199,15 +183,15 @@ const Profile = () => {
 const ProfileField = ({ icon, label, value }) => {
   return (
     <div className="flex items-start">
-      <div className="mr-4 mt-1" style={{ color: "#48A6A7" }}>
+      <div className="mr-4 mt-1 text-[#48A6A7]">
         {icon}
       </div>
       <div>
-        <p className="text-sm font-medium" style={{ color: "#006A71" }}>
+        <p className="text-sm font-medium text-[#006A71]">
           {label}
         </p>
-        <p className="text-lg font-semibold" style={{ color: "#006A71" }}>
-          {value}
+        <p className="text-lg font-semibold text-[#006A71] break-all">
+          {value || "Not provided"}
         </p>
       </div>
     </div>

@@ -9,7 +9,7 @@ const useDeleteFromWishlist = () => {
 
   const mutation = useMutation({
     mutationFn: async (id) => {
-        console.log(id);
+        
         
       const res = await axiosSecure.delete(`/api/wishlist-properties/${id}`);
       return res.data;
