@@ -77,6 +77,7 @@ const RegisterPage = () => {
         role: "user",
         uid: userCredential.user.uid,
         createdAt: new Date(),
+        
       };
 
       saveUserMutation.mutate(userData);
