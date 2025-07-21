@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { FcGoogle } from "react-icons/fc";
 import Swal from "sweetalert2";
@@ -11,15 +11,19 @@ import {
   FaImage,
   FaGlobe,
   FaCalendarAlt,
+  FaUpload,
 } from "react-icons/fa";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import useAuth from "../../CustomHooks/useAuth";
 
+const IMGBB_API_KEY = "2e1c7fe21ce6c1d4a08100cd99fc90f8";
+const IMGBB_API_URL = "https://api.imgbb.com/1/upload";
 
 const RegisterPage = () => {
-  const { registerUser, googleLogin, user } = useAuth()
-  console.log(user);
+  const { registerUser, googleLogin, user } = useAuth();
+  const [isUploading, setIsUploading] = useState(false);
+  const [photoUrl, setPhotoUrl] = useState("");
   
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -29,7 +33,69 @@ const RegisterPage = () => {
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm();
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Validate file type and size
+    const validTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+    const maxSize = 5 * 1024 * 1024; // 5MB
+
+    if (!validTypes.includes(file.type)) {
+      Swal.fire({
+        icon: "error",
+        title: "Invalid File Type",
+        text: "Please upload a JPG, PNG, GIF, or WEBP image.",
+      });
+      return;
+    }
+
+    if (file.size > maxSize) {
+      Swal.fire({
+        icon: "error",
+        title: "File Too Large",
+        text: "Maximum file size is 5MB.",
+      });
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("image", file);
+    formData.append("key", IMGBB_API_KEY);
+
+    try {
+      setIsUploading(true);
+      const response = await axios.post(IMGBB_API_URL, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.data.success) {
+        const imageUrl = response.data.data.url;
+        setPhotoUrl(imageUrl);
+        setValue("photo", imageUrl);
+        Swal.fire({
+          icon: "success",
+          title: "Image uploaded successfully!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Upload Failed",
+        text: "Failed to upload image. Please try again.",
+      });
+    } finally {
+      setIsUploading(false);
+    }
+  };
 
   const saveUserMutation = useMutation({
     mutationFn: async (userData) => {
@@ -37,8 +103,6 @@ const RegisterPage = () => {
         "http://localhost:3000/auth/register",
         userData
       );
-      console.log(res);
-
       if (res.status !== 200) {
         throw new Error("Failed to save user data");
       }
@@ -51,8 +115,6 @@ const RegisterPage = () => {
       navigate("/login");
     },
     onError: (error) => {
-      console.log(error);
-
       Swal.fire({
         icon: "error",
         title: "Registration Error",
@@ -70,14 +132,13 @@ const RegisterPage = () => {
       const userData = {
         name,
         email,
-        photo,
+        photo: photo || photoUrl,
         birth,
         phone,
         country,
         role: "user",
         uid: userCredential.user.uid,
         createdAt: new Date(),
-        
       };
 
       saveUserMutation.mutate(userData);
@@ -151,14 +212,84 @@ const RegisterPage = () => {
               errors={errors}
               type="date"
             />
-            <InputField
-              icon={<FaImage className="text-[#48A6A7]" />}
-              name="photo"
-              label="Profile Photo URL (optional)"
-              register={register}
-              required={false}
-              errors={errors}
-            />
+            
+            {/* Image Upload Field */}
+            <div className="space-y-1">
+              <label htmlFor="photo" className="block text-sm font-medium text-[#006A71]">
+                Profile Photo
+              </label>
+              <div className="flex items-center gap-4">
+                <label
+                  htmlFor="photo-upload"
+                  className={`flex-1 cursor-pointer border-2 border-dashed rounded-md p-4 text-center transition-colors ${
+                    isUploading
+                      ? "border-[#48A6A7] bg-[#48A6A7]/10"
+                      : "border-[#9ACBD0] hover:border-[#48A6A7] hover:bg-[#48A6A7]/10"
+                  }`}
+                >
+                  <div className="flex flex-col items-center justify-center gap-2">
+                    {isUploading ? (
+                      <div className="flex items-center gap-2 text-[#48A6A7]">
+                        <svg
+                          className="animate-spin h-5 w-5"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
+                        </svg>
+                        <span>Uploading...</span>
+                      </div>
+                    ) : (
+                      <>
+                        <FaUpload className="text-[#48A6A7] text-xl" />
+                        <span className="text-sm text-[#006A71]">
+                          Click to upload or drag and drop
+                        </span>
+                        <span className="text-xs text-gray-500">
+                          (Supports: JPG, PNG, GIF, WEBP. Max 5MB)
+                        </span>
+                      </>
+                    )}
+                  </div>
+                  <input
+                    id="photo-upload"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    className="hidden"
+                    disabled={isUploading}
+                  />
+                </label>
+              </div>
+              {photoUrl && (
+                <div className="mt-2 flex items-center gap-2">
+                  <span className="text-sm text-[#006A71]">Uploaded:</span>
+                  <img
+                    src={photoUrl}
+                    alt="Preview"
+                    className="h-10 w-10 rounded-full object-cover"
+                  />
+                </div>
+              )}
+              <input
+                type="hidden"
+                {...register("photo")}
+              />
+            </div>
+
             <InputField
               icon={<FaLock className="text-[#48A6A7]" />}
               name="password"

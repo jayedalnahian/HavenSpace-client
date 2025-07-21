@@ -5,13 +5,14 @@ import QACarousel from '../../components/HomePageComponents/QACarousel';
 import AboutSection from '../../components/HomePageComponents/AboutSection';
 import LatestReviews from '../../components/LatestReviews';
 import HomeReviews from '../../components/HomeReviews';
+import WebsiteReviews from '../../components/WebsiteReviews';
 
 const HomePage = () => {
     return (
         <div>
            <HeroSection></HeroSection>
            <FeaturedListings></FeaturedListings>
-           <HomeReviews></HomeReviews>
+           <WebsiteReviews></WebsiteReviews>
            <QACarousel></QACarousel>
            <AboutSection></AboutSection>
         </div>

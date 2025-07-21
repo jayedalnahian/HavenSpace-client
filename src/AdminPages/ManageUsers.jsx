@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   FaUser,
   FaUserTie,
@@ -15,7 +15,7 @@ import Swal from "sweetalert2";
 const ManageUsers = () => {
   const { allUsers, isLoading, error, refetch } = useAllUsers();
   const { updateUserRole } = useUpdateUserRole();
-  const { deleteUserByUID, loading } = useAdminDeleteUser();
+  const { deleteUserByUID } = useAdminDeleteUser();
 
   const handleMakeAdmin = (userId) => {
     updateUserRole(userId, "admin");

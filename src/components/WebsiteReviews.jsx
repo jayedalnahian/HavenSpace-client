@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FaStar, FaRegStar, FaPlus } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import useAuth from "../CustomHooks/useAuth";
 import usePropertyReviews from "../CustomHooks/usePropertyReviews";
 import useUserData from "../CustomHooks/useUserData";
-import ReviewModal from "./ReviewModal";
 import usePostReviews from "../CustomHooks/usePostReviews";
+import WebsiteReviewModal from "./WebsiteReviewModal";
+import useWebsiteReview from "../CustomHooks/useWebsiteReview";
 
 const StarRating = ({ rating }) => {
   return (
@@ -21,11 +22,6 @@ const StarRating = ({ rating }) => {
   );
 };
 
-const formatDate = (dateString) => {
-  const options = { year: "numeric", month: "short", day: "numeric" };
-  return new Date(dateString).toLocaleDateString(undefined, options);
-};
-
 const ReviewCard = ({ review }) => {
   return (
     <motion.div
@@ -36,9 +32,9 @@ const ReviewCard = ({ review }) => {
     >
       <div className="flex items-center mb-4">
         <img
-          src={review?.reviewerAvatar || `https://i.ibb.co/1GxP6fDg/8608769.png`}
+          src={review.reviewerAvatar || `https://i.ibb.co/1GxP6fDg/8608769.png`}
           alt={review.reviewerName}
-          className="w-12 h-12 rounded-full object-cover mr-3"
+          className="w-12 h-12 rounded-full border border-[#006A71] object-cover mr-3"
         />
         <div>
           <h4 className="text-[#006A71] font-semibold">
@@ -48,16 +44,11 @@ const ReviewCard = ({ review }) => {
         </div>
       </div>
 
-      <div className="mb-4">
-        <p className="text-[#006A71] font-medium mb-1 text-sm">{review.text}</p>
-      </div>
-
-      <div className="mt-auto">
-        <div className="flex items-center">
-          <span className="text-[#9ACBD0] text-xs">
-            Reviewed on {formatDate(review.postedAt)}
-          </span>
-        </div>
+      <div className="mb-4 border border-[#006A71] shadow-sm rounded-2xl px-3 py-4">
+        <h3 className="text-[#48A6A7] font-medium mb-1 text-2xl">
+          {review.title}
+        </h3>
+        <p className="text-[#006A71]">{review.text}</p>
       </div>
     </motion.div>
   );
@@ -84,19 +75,18 @@ const AddReviewCard = ({ onClick }) => {
   );
 };
 
-const LatestReviews = ({ property }) => {
+const WebsiteReviews = ({ property }) => {
   const {
     reviews,
     isLoading: loadingReviews,
     refetch,
-  } = usePropertyReviews(property?._id);
-
-  refetch();
+  } = useWebsiteReview(property?._id);
   const { user } = useAuth();
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [showReviewModal, setShowReviewModal] = useState(false);
   const { postReview, isPending: isPostingReview } = usePostReviews();
   const { userData, isLoading } = useUserData();
+  console.log(reviews);
 
   const handleWriteReview = (property) => {
     setSelectedProperty(property);
@@ -109,17 +99,14 @@ const LatestReviews = ({ property }) => {
 
   const handleReviewSubmit = async (reviewData) => {
     await postReview({
-      reviewFor: "property",
-      propertyId: selectedProperty._id,
+      reviewFor: "website",
       rating: reviewData.rating,
       text: reviewData.text,
       reviewerUID: user?.uid,
       reviewerName: userData.name,
       reviewerAvatar: userData.photo,
-      propertyIMG: reviewData.propertyIMG,
       title: reviewData.title,
       postedAt: new Date().toISOString(),
-      agentId: property?.creatorUID,
     });
     setShowReviewModal(false);
     refetch();
@@ -157,7 +144,7 @@ const LatestReviews = ({ property }) => {
       {/* Review Modal */}
       <AnimatePresence>
         {showReviewModal && (
-          <ReviewModal
+          <WebsiteReviewModal
             property={selectedProperty}
             onClose={() => setShowReviewModal(false)}
             onSubmit={handleReviewSubmit}
@@ -169,4 +156,4 @@ const LatestReviews = ({ property }) => {
   );
 };
 
-export default LatestReviews;
+export default WebsiteReviews;

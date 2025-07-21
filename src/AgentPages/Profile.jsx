@@ -94,7 +94,7 @@ const Profile = () => {
             <div className="flex justify-center mb-4">
               {userData.photo ? (
                 <img
-                  src={userData.photo}
+                  src={userData.photo  || `https://api.dicebear.com/7.x/initials/svg?seed=${userData.name}&backgroundColor=006A71&fontColor=F2EFE7`}
                   alt="Profile"
                   className="w-32 h-32 rounded-full object-cover border-4 border-white shadow-md"
                 />
