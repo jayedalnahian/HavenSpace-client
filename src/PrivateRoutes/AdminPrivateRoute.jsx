@@ -1,13 +1,12 @@
 import React from "react";
-import { useLocation, Navigate } from "react-router";
 import useUserData from "../CustomHooks/useUserData";
 import LoadingSpinner from "../components/LoadingSpinner";
+import { Navigate } from "react-router";
 
 const AdminPrivateRoute = ({ children }) => {
-  const { userData, isLoading: isUserDataLoading } = useUserData();
-  const location = useLocation();
+  const { userData, isUserLoading } = useUserData();
 
-  if (isUserDataLoading) {
+  if (isUserLoading) {
     return <LoadingSpinner />;
   }
 
@@ -15,8 +14,6 @@ const AdminPrivateRoute = ({ children }) => {
     return (
       <Navigate
         to="/forbidden-page"
-        replace
-        state={{ from: location }}
       />
     );
   }

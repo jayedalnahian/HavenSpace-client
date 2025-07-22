@@ -82,7 +82,7 @@ const UserWishList = () => {
           We'll keep them here for you.
         </p>
         <button
-          onClick={() => navigate("/properties")}
+          onClick={() => navigate("/all-properties")}
           className="bg-primary hover:bg-primary-dark text-white font-medium py-3 px-8 rounded-lg transition-colors shadow-md hover:shadow-lg"
         >
           Explore Properties

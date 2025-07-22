@@ -3,8 +3,6 @@ import HeroSection from '../../components/HomePageComponents/HeroSection';
 import FeaturedListings from '../../components/HomePageComponents/FeaturedListings';
 import QACarousel from '../../components/HomePageComponents/QACarousel';
 import AboutSection from '../../components/HomePageComponents/AboutSection';
-import LatestReviews from '../../components/LatestReviews';
-import HomeReviews from '../../components/HomeReviews';
 import WebsiteReviews from '../../components/WebsiteReviews';
 
 const HomePage = () => {

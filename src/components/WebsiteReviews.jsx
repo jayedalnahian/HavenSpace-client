@@ -136,7 +136,7 @@ const WebsiteReviews = ({ property }) => {
 
           {/* Existing Reviews */}
           {reviews.map((review) => (
-            <ReviewCard key={review._id.$oid} review={review} />
+            <ReviewCard key={review._id} review={review} />
           ))}
         </div>
       </div>

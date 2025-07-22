@@ -123,7 +123,7 @@ const UserBought = () => {
           completing a purchase.
         </p>
         <button
-          onClick={() => navigate("/properties")}
+          onClick={() => navigate("/all-properties")}
           className="bg-primary hover:bg-primary-dark text-white font-medium py-3 px-8 rounded-lg"
         >
           Browse Properties

@@ -100,7 +100,7 @@ const RegisterPage = () => {
   const saveUserMutation = useMutation({
     mutationFn: async (userData) => {
       const res = await axios.post(
-        "http://localhost:3000/auth/register",
+        "https://b11a12-server-side-jayedalnahian.vercel.app/auth/register",
         userData
       );
       if (res.status !== 200) {

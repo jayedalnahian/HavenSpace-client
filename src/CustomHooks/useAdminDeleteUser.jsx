@@ -15,7 +15,7 @@ const useAdminDeleteUser = () => {
       const token = await auth.currentUser.getIdToken();
 
       const res = await axios.delete(
-        `http://localhost:3000/api/users/${targetUID}`,
+        `https://b11a12-server-side-jayedalnahian.vercel.app/api/users/${targetUID}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

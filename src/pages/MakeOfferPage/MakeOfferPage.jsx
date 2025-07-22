@@ -13,11 +13,11 @@ const MakeOfferPage = () => {
   const navigate = useNavigate();
   const { user: currentUser } = useAuth();
   const { property, isLoading, error: propertyError } = useSingleProperty(id);
-  const { userData, isUserLoading} = useUserData()
+  const { userData, isUserLoading } = useUserData();
   const [offerAmount, setOfferAmount] = useState("");
   const [buyingDate, setBuyingDate] = useState("");
   const [formError, setFormError] = useState("");
-  const { sendOffer, isPending: isSendOfferPending} = useSendOffer()
+  const { sendOffer, isPending: isSendOfferPending } = useSendOffer();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -52,16 +52,11 @@ const MakeOfferPage = () => {
       uid: userData.uid,
       _id: userData._id,
       selectedDate: selectedDate,
-      offerAmount: offerAmount
+      offerAmount: offerAmount,
     };
-  
-    
-    
-    
-    sendOffer({ propertyId: id, userRequestData });
 
-  
-    
+    sendOffer({ propertyId: id, userRequestData });
+    navigate("/dashboard/wishlist");
   };
 
   if (isLoading || isUserLoading) {
@@ -133,7 +128,10 @@ const MakeOfferPage = () => {
               <div className="flex items-center text-gray-600 mb-3">
                 <MdPerson className="mr-1 text-gray-500" />
                 <span>
-                  Owner: {property.creatorName || property.creatorEmail?.split("@")[0] || "Unknown"}
+                  Owner:{" "}
+                  {property.creatorName ||
+                    property.creatorEmail?.split("@")[0] ||
+                    "Unknown"}
                 </span>
               </div>
               <div className="bg-gray-50 p-3 rounded-lg">
@@ -192,7 +190,11 @@ const MakeOfferPage = () => {
               </label>
               <input
                 type="text"
-                value={property.creatorName || property.creatorEmail?.split("@")[0] || "Unknown"}
+                value={
+                  property.creatorName ||
+                  property.creatorEmail?.split("@")[0] ||
+                  "Unknown"
+                }
                 readOnly
                 className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-gray-700"
               />
@@ -205,7 +207,7 @@ const MakeOfferPage = () => {
               </label>
               <input
                 type="text"
-                value={ userData?.name || "Not available"}
+                value={userData?.name || "Not available"}
                 readOnly
                 className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-gray-700"
               />
@@ -279,13 +281,31 @@ const MakeOfferPage = () => {
             >
               {isSendOfferPending ? (
                 <>
-                  <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  <svg
+                    className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
                   </svg>
                   Submitting...
                 </>
-              ) : "Submit Offer"}
+              ) : (
+                "Submit Offer"
+              )}
             </button>
           </div>
         </form>
