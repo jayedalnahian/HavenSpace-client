@@ -21,6 +21,9 @@ import PaymentSuccessPage from "../pages/PropertyDetails/PaymentSuccessPage";
 import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout";
 import MakeOfferPage from "../pages/MakeOfferPage/MakeOfferPage";
 import PrivateRoutes from "../PrivateRoutes/PrivateRoutes";
+import AdminPrivateRoute from "../PrivateRoutes/AdminPrivateRoute";
+import AgentPrivateRoute from "../PrivateRoutes/AgentPrivateRoute";
+import ForbiddenPage from "../pages/extraPages/ForbiddenPage";
 
 const router = createBrowserRouter([
   {
@@ -32,71 +35,157 @@ const router = createBrowserRouter([
       { path: "/register", element: <RegisterPage /> },
       {
         path: "/propertyDetails/:id",
-        element: <PrivateRoutes><PropertyDetailsPage></PropertyDetailsPage></PrivateRoutes>,
+        element: (
+          <PrivateRoutes>
+            <PropertyDetailsPage></PropertyDetailsPage>
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/EditPropertyDetails/:id",
-        element: <PrivateRoutes><EditPropertyDetails></EditPropertyDetails></PrivateRoutes>,
+        element: (
+          <PrivateRoutes>
+            <EditPropertyDetails></EditPropertyDetails>
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/payment-success",
-        element: <PrivateRoutes><PaymentSuccessPage></PaymentSuccessPage></PrivateRoutes>
+        element: (
+          <PrivateRoutes>
+            <PaymentSuccessPage></PaymentSuccessPage>
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/all-properties",
-        element: <PrivateRoutes><AllPropertiesPage></AllPropertiesPage></PrivateRoutes>,
+        element: (
+          <PrivateRoutes>
+            <AllPropertiesPage></AllPropertiesPage>
+          </PrivateRoutes>
+        ),
       },
       {
         path: "make-offer/:id",
-        element: <PrivateRoutes><MakeOfferPage></MakeOfferPage></PrivateRoutes>,
+        element: (
+          <PrivateRoutes>
+            <MakeOfferPage></MakeOfferPage>
+          </PrivateRoutes>
+        ),
+      },
+      {
+        path: "forbidden-page",
+        element: <ForbiddenPage></ForbiddenPage>,
       },
       {
         path: "/dashboard",
-        element: <PrivateRoutes><DashboardLayout></DashboardLayout></PrivateRoutes>,
+        element: (
+          <PrivateRoutes>
+            <DashboardLayout></DashboardLayout>
+          </PrivateRoutes>
+        ),
         children: [
           {
             index: true,
-            element: <PrivateRoutes><Profile></Profile></PrivateRoutes>,
+            element: (
+              <PrivateRoutes>
+                <Profile></Profile>
+              </PrivateRoutes>
+            ),
           },
           {
             path: "add-property",
-            element: <PrivateRoutes><AddProperty></AddProperty></PrivateRoutes>,
+            element: (
+              <PrivateRoutes>
+                <AgentPrivateRoute>
+                  <AddProperty></AddProperty>
+                </AgentPrivateRoute>
+              </PrivateRoutes>
+            ),
           },
           {
             path: "my-properties",
-            element: <PrivateRoutes><MyProperties></MyProperties></PrivateRoutes>,
+            element: (
+              <PrivateRoutes>
+                <AgentPrivateRoute>
+                  <MyProperties></MyProperties>
+                </AgentPrivateRoute>
+              </PrivateRoutes>
+            ),
           },
           {
             path: "sold-properties",
-            element: <PrivateRoutes><SoldProperties></SoldProperties></PrivateRoutes>,
+            element: (
+              <PrivateRoutes>
+                <AgentPrivateRoute>
+                  <SoldProperties></SoldProperties>
+                </AgentPrivateRoute>
+              </PrivateRoutes>
+            ),
           },
           {
             path: "requests",
-            element: <PrivateRoutes><RequestedPropertys></RequestedPropertys></PrivateRoutes>,
+            element: (
+              <PrivateRoutes>
+                <AgentPrivateRoute>
+                  <RequestedPropertys></RequestedPropertys>
+                </AgentPrivateRoute>
+              </PrivateRoutes>
+            ),
           },
           {
             path: "manage-users",
-            element: <PrivateRoutes><ManageUsers></ManageUsers></PrivateRoutes>,
+            element: (
+              <PrivateRoutes>
+                <AdminPrivateRoute>
+                  <ManageUsers></ManageUsers>
+                </AdminPrivateRoute>
+              </PrivateRoutes>
+            ),
           },
           {
             path: "manage-properties",
-            element: <PrivateRoutes><ManageProperties></ManageProperties></PrivateRoutes>,
+            element: (
+              <PrivateRoutes>
+                <AdminPrivateRoute>
+                  <ManageProperties></ManageProperties>
+                </AdminPrivateRoute>
+              </PrivateRoutes>
+            ),
           },
           {
             path: "manage-reviews",
-            element: <PrivateRoutes><ManageReviews></ManageReviews></PrivateRoutes>,
+            element: (
+              <PrivateRoutes>
+                <AdminPrivateRoute>
+                  <ManageReviews></ManageReviews>
+                </AdminPrivateRoute>
+              </PrivateRoutes>
+            ),
           },
           {
             path: "wishlist",
-            element: <PrivateRoutes><UserWishList></UserWishList></PrivateRoutes>,
+            element: (
+              <PrivateRoutes>
+                <UserWishList></UserWishList>
+              </PrivateRoutes>
+            ),
           },
           {
             path: "bought",
-            element: <PrivateRoutes><UserBought></UserBought></PrivateRoutes>,
+            element: (
+              <PrivateRoutes>
+                <UserBought></UserBought>
+              </PrivateRoutes>
+            ),
           },
           {
             path: "reviews",
-            element: <PrivateRoutes><UserMyReviews></UserMyReviews></PrivateRoutes>,
+            element: (
+              <PrivateRoutes>
+                <UserMyReviews></UserMyReviews>
+              </PrivateRoutes>
+            ),
           },
         ],
       },

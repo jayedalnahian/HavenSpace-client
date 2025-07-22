@@ -27,11 +27,6 @@ const HeroSection = () => {
                 Browse Properties
               </button>
             </Link>
-            <Link to="/dashboard/agent/add-property">
-              <button className="bg-[#48A6A7] hover:bg-[#3e999a] text-white px-6 py-3 rounded-xl shadow-xl">
-                Add Property
-              </button>
-            </Link>
           </div>
         </motion.div>
 

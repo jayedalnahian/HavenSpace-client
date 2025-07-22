@@ -4,26 +4,24 @@ import useAuth from "./useAuth";
 
 const useUserData = () => {
   const axiosSecure = useAxiosInterceptor();
-  const {user} = useAuth()
+  const { user } = useAuth();
 
   const {
     data: userData,
-    isLoading : isUserLoading,
+    isLoading: isUserLoading,
     error,
-    refetch
+    refetch,
   } = useQuery({
-    queryKey: ["userData"],
+    queryKey: ["userData", user?.uid],
     queryFn: async () => {
       const res = await axiosSecure.get(`/auth/users/${user.uid}`);
-
       return res.data;
     },
+    enabled: !!user, // ✅ Prevents running before user exists
     staleTime: 5 * 60 * 1000,
   });
 
-  
-
-  return { userData, isUserLoading, error, refetch};
+  return { userData, isUserLoading, error, refetch };
 };
 
 export default useUserData;
