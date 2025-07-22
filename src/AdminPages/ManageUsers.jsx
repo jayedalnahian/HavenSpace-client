@@ -17,28 +17,26 @@ const ManageUsers = () => {
   const { updateUserRole } = useUpdateUserRole();
   const { deleteUserByUID } = useAdminDeleteUser();
 
-  const handleMakeAdmin = (userId) => {
-    updateUserRole(userId, "admin");
+  const handleMakeAdmin = async (userId) => {
+    await updateUserRole(userId, "admin");
     refetch();
 
     // call your handler function here
   };
 
-  const handleMakeAgent = (userId) => {
-    updateUserRole(userId, "agent");
+  const handleMakeAgent = async (userId) => {
+    await updateUserRole(userId, "agent");
     refetch();
     // call your handler function here
   };
 
-  const handleMarkAsFraud = (userId) => {
-    updateUserRole(userId, "fraud");
+  const handleMarkAsFraud = async (userId) => {
+    await updateUserRole(userId, "fraud");
     refetch();
     // call your handler function here
   };
 
   const handleDeleteUser = async (user) => {
-    console.log(user);
-
     Swal.fire({
       title: `Delete ${user.name}?`,
       text: "You won't be able to revert this!",

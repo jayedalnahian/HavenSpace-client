@@ -10,7 +10,6 @@ const useRevoveFromRequested = () => {
 
   const mutation = useMutation({
     mutationFn: async ({ propertyId, uid }) => {
-        console.log(propertyId, uid);
         
       const response = await axiosSecure.patch(
         `/requested-properties/${propertyId}/remove`,

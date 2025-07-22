@@ -94,7 +94,6 @@ const HomeReviews = () => {
   const [showReviewModal, setShowReviewModal] = useState(false);
   const { postReview, isPending: isPostingReview } = usePostHomeReviews();
   const { userData, isLoading } = useUserData();
-  console.log(reviews);
 
   const handleWriteReview = () => {
     setShowReviewModal(true);

@@ -27,7 +27,7 @@ const UserBought = () => {
 
 
   const handleDelete = (property) => {
-    console.log(property);
+
     const propertyId = property?._id;
     const uid = property?.userRequestDetails?.uid
     mutate({ propertyId, uid })

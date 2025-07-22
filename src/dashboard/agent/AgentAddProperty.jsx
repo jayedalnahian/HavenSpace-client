@@ -23,7 +23,7 @@ const AgentAddProperty = () => {
   const onSubmit = async (data) => {
     try {
       // Here you would typically make an API call
-      console.log('Form submitted:', data);
+     
       
       // Show success toast
       toast.success('Property added successfully!', {

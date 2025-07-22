@@ -81,12 +81,12 @@ const WebsiteReviews = ({ property }) => {
     isLoading: loadingReviews,
     refetch,
   } = useWebsiteReview(property?._id);
+  refetch();
   const { user } = useAuth();
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [showReviewModal, setShowReviewModal] = useState(false);
   const { postReview, isPending: isPostingReview } = usePostReviews();
   const { userData, isLoading } = useUserData();
-  console.log(reviews);
 
   const handleWriteReview = (property) => {
     setSelectedProperty(property);

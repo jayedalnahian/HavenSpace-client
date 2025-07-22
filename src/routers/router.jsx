@@ -20,6 +20,7 @@ import Profile from "../AgentPages/Profile";
 import PaymentSuccessPage from "../pages/PropertyDetails/PaymentSuccessPage";
 import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout";
 import MakeOfferPage from "../pages/MakeOfferPage/MakeOfferPage";
+import PrivateRoutes from "../PrivateRoutes/PrivateRoutes";
 
 const router = createBrowserRouter([
   {
@@ -31,71 +32,71 @@ const router = createBrowserRouter([
       { path: "/register", element: <RegisterPage /> },
       {
         path: "/propertyDetails/:id",
-        element: <PropertyDetailsPage></PropertyDetailsPage>,
+        element: <PrivateRoutes><PropertyDetailsPage></PropertyDetailsPage></PrivateRoutes>,
       },
       {
         path: "/EditPropertyDetails/:id",
-        element: <EditPropertyDetails></EditPropertyDetails>,
+        element: <PrivateRoutes><EditPropertyDetails></EditPropertyDetails></PrivateRoutes>,
       },
       {
         path: "/payment-success",
-        element: <PaymentSuccessPage></PaymentSuccessPage>
+        element: <PrivateRoutes><PaymentSuccessPage></PaymentSuccessPage></PrivateRoutes>
       },
       {
         path: "/all-properties",
-        element: <AllPropertiesPage></AllPropertiesPage>,
+        element: <PrivateRoutes><AllPropertiesPage></AllPropertiesPage></PrivateRoutes>,
       },
       {
         path: "make-offer/:id",
-        element: <MakeOfferPage></MakeOfferPage>,
+        element: <PrivateRoutes><MakeOfferPage></MakeOfferPage></PrivateRoutes>,
       },
       {
         path: "/dashboard",
-        element: <DashboardLayout></DashboardLayout>,
+        element: <PrivateRoutes><DashboardLayout></DashboardLayout></PrivateRoutes>,
         children: [
           {
             index: true,
-            element: <Profile></Profile>,
+            element: <PrivateRoutes><Profile></Profile></PrivateRoutes>,
           },
           {
             path: "add-property",
-            element: <AddProperty></AddProperty>,
+            element: <PrivateRoutes><AddProperty></AddProperty></PrivateRoutes>,
           },
           {
             path: "my-properties",
-            element: <MyProperties></MyProperties>,
+            element: <PrivateRoutes><MyProperties></MyProperties></PrivateRoutes>,
           },
           {
             path: "sold-properties",
-            element: <SoldProperties></SoldProperties>,
+            element: <PrivateRoutes><SoldProperties></SoldProperties></PrivateRoutes>,
           },
           {
             path: "requests",
-            element: <RequestedPropertys></RequestedPropertys>,
+            element: <PrivateRoutes><RequestedPropertys></RequestedPropertys></PrivateRoutes>,
           },
           {
             path: "manage-users",
-            element: <ManageUsers></ManageUsers>,
+            element: <PrivateRoutes><ManageUsers></ManageUsers></PrivateRoutes>,
           },
           {
             path: "manage-properties",
-            element: <ManageProperties></ManageProperties>,
+            element: <PrivateRoutes><ManageProperties></ManageProperties></PrivateRoutes>,
           },
           {
             path: "manage-reviews",
-            element: <ManageReviews></ManageReviews>,
+            element: <PrivateRoutes><ManageReviews></ManageReviews></PrivateRoutes>,
           },
           {
             path: "wishlist",
-            element: <UserWishList></UserWishList>,
+            element: <PrivateRoutes><UserWishList></UserWishList></PrivateRoutes>,
           },
           {
             path: "bought",
-            element: <UserBought></UserBought>,
+            element: <PrivateRoutes><UserBought></UserBought></PrivateRoutes>,
           },
           {
             path: "reviews",
-            element: <UserMyReviews></UserMyReviews>,
+            element: <PrivateRoutes><UserMyReviews></UserMyReviews></PrivateRoutes>,
           },
         ],
       },

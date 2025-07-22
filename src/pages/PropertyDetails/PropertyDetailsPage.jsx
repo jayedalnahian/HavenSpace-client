@@ -30,7 +30,7 @@ const PropertyDetailsPage = () => {
     property?.wishlistUsersData?.some((user) => user?.uid === userData?.uid) ||
     false;
 
-  console.log(property);
+
 
   const handleAddToWishlist = async () => {
     const user = {
@@ -46,17 +46,7 @@ const PropertyDetailsPage = () => {
     mutate({ propertyId, wishlistUser: user });
   };
 
-  // const paymentProccess = async () => {
-  //   const res = await axiosSecure.post("/api/payment/create-checkout-session", {
-  //     property: property,
-  //   });
-
-  //   if (res.data?.url) {
-  //     console.log(res.data?.url);
-
-  //     window.location.href = res.data.url; // redirect to Stripe hosted checkout
-  //   }
-  // };
+  
 
   if (isLoading || roleLoading || isUserLoading) {
     return (

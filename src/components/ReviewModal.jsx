@@ -21,7 +21,6 @@ const ReviewModal = ({ property, onClose, onSubmit }) => {
     });
   };
 
-  // console.log(property);
   
 
   return (

@@ -17,7 +17,7 @@ const PaymentSuccessPage = () => {
         if (response.data.verified) {
           setPaymentStatus("success");
         } else {
-          console.log("Verify response:", response.data);
+         
           setPaymentStatus("failed");
         }
       } catch (err) {

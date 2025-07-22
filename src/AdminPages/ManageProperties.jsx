@@ -15,7 +15,6 @@ import {
   FaChevronRight,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useAllProperties from "../CustomHooks/useAllProperties";
 import useToggleAdminApproval from "../CustomHooks/useToggleAdminApproval";
@@ -112,16 +111,16 @@ const ManageProperties = () => {
   };
 
   // Handle property actions
-  const approveProperty = (propertyId) => {
+  const approveProperty = async (propertyId) => {
     const newStatus = "true";
-    toggleAdminApproval({ propertyId, newStatus });
-    refetch()
+    await toggleAdminApproval({ propertyId, newStatus });
+    refetch();
   };
 
-  const rejectProperty = (propertyId) => {
+  const rejectProperty = async (propertyId) => {
     const newStatus = "false";
-    toggleAdminApproval({ propertyId, newStatus });
-    refetch()
+    await toggleAdminApproval({ propertyId, newStatus });
+    refetch();
   };
 
   const formatDateTime = (dateString) => {

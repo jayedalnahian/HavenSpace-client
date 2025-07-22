@@ -14,7 +14,6 @@ const WebsiteReviewModal = ({ property, onClose, onSubmit }) => {
     });
   };
 
-  // console.log(property);
   
 
   return (

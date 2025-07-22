@@ -17,7 +17,7 @@ const AddProperty = () => {
   const axiosInterceptor = useAxiosInterceptor();
   const {userData} = useUserData()
   const { user } = useAuth();
-  // console.log(user);
+
 
   // Mock agent data (replace with your actual context/state)
   const agentData = {
@@ -145,7 +145,6 @@ const AddProperty = () => {
       };
 
       // 3. API call to your backend
-      // console.log("Final property data to submit:", propertyData);
       try {
         const { data } = await axiosInterceptor.post(
           "/api/properties",

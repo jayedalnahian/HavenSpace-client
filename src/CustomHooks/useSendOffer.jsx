@@ -13,7 +13,7 @@ const useSendOffer = () => {
     isError,
   } = useMutation({
     mutationFn: async ({ propertyId, userRequestData }) => {
-      console.log(propertyId);
+  
 
       const res = await axiosSecure.patch(
         `/make-offer/${propertyId}`,

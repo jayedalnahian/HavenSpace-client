@@ -54,7 +54,7 @@ const MakeOfferPage = () => {
       selectedDate: selectedDate,
       offerAmount: offerAmount
     };
-    console.log(id);
+  
     
     
     

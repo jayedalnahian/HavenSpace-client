@@ -1,97 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
 import { motion } from 'framer-motion';
-import useAllProperties from '../../CustomHooks/useAllProperties';
+import useHomePagePropertys from '../../CustomHooks/useHomePagePropertys';
 
-// Custom hook for fetching properties (mock implementation)
-// const useAllProperties = () => {
-//   // In a real app, this would fetch from an API
-//   const properties = [
-//     {
-//       "_id": "68711b4adb2ae2e5a38b7b74",
-//       "title": "Deleniti natus aliqu",
-//       "description": "Quia commodo totam p dfgdg  dfgd dfgb fg",
-//       "location": "Eos quia consequatur",
-//       "minPrice": 1722,
-//       "maxPrice": 1894,
-//       "bedrooms": 92,
-//       "bathrooms": 71,
-//       "areaSize": 68,
-//       "propertyType": "Commercial",
-//       "features": ["Garage", "Swimming Pool", "Furnished", "Parking", "Security"],
-//       "image": "https://i.ibb.co/jktgBHyd/20250211-153809.jpg",
-//       "availability": "Sold",
-//       "agentName": null,
-//       "agentEmail": "nahian@gmail.com",
-//       "agentId": "ZCe5BOpQEOb7ofKVYhxIlP1XcxR2",
-//       "createdAt": "2025-07-11T14:10:18.502Z"
-//     },
-//     {
-//       "_id": "68711c99639090b3faebd8e9",
-//       "title": "Modern Family Home",
-//       "description": "Spacious modern home with all essential facilities.",
-//       "location": "Dhanmondi, Dhaka",
-//       "minPrice": 95000,
-//       "maxPrice": 120000,
-//       "bedrooms": 4,
-//       "bathrooms": 3,
-//       "areaSize": 2200,
-//       "propertyType": "Apartment",
-//       "features": ["Balcony", "Security", "Parking"],
-//       "image": "https://i.ibb.co/z6pYjYm/home1.jpg",
-//       "availability": "Available",
-//       "agentName": "Jane Smith",
-//       "agentEmail": "jane@example.com",
-//       "agentId": "a1b2c3d4e5f6g7",
-//       "createdAt": "2025-07-11T10:15:00.000Z"
-//     },
-//     {
-//       "_id": "68711c99639090b3faebd8e8",
-//       "title": "Luxury Villa with Ocean View",
-//       "description": "Stunning villa with panoramic ocean views and private beach access.",
-//       "location": "Cox's Bazar",
-//       "minPrice": 250000,
-//       "maxPrice": 300000,
-//       "bedrooms": 5,
-//       "bathrooms": 4,
-//       "areaSize": 3500,
-//       "propertyType": "Villa",
-//       "features": ["Swimming Pool", "Garden", "Security", "Beach Access"],
-//       "image": "https://i.ibb.co/0jq7R0y/villa.jpg",
-//       "availability": "Available",
-//       "agentName": "John Doe",
-//       "agentEmail": "john@example.com",
-//       "agentId": "h8i9j0k1l2m3n4",
-//       "createdAt": "2025-07-10T08:30:00.000Z"
-//     },
-//     {
-//       "_id": "68711c99639090b3faebd8e7",
-//       "title": "Cozy Studio Apartment",
-//       "description": "Perfect for singles or couples in the heart of the city.",
-//       "location": "Gulshan, Dhaka",
-//       "minPrice": 45000,
-//       "maxPrice": 50000,
-//       "bedrooms": 1,
-//       "bathrooms": 1,
-//       "areaSize": 650,
-//       "propertyType": "Studio",
-//       "features": ["Furnished", "Security", "Parking"],
-//       "image": "https://i.ibb.co/7QYfXJ3/studio.jpg",
-//       "availability": "Available",
-//       "agentName": "Sarah Johnson",
-//       "agentEmail": "sarah@example.com",
-//       "agentId": "o5p6q7r8s9t0u1",
-//       "createdAt": "2025-07-09T14:45:00.000Z"
-//     }
-//   ];
-  
-//   return {
-//     properties,
-//     isLoading: false,
-//     error: null,
-//     refetch: () => {}
-//   };
-// };
+
 
 const PropertyCard = ({ property }) => {
   
@@ -147,7 +59,7 @@ const PropertyCard = ({ property }) => {
         </div>
         
         <button
-          onClick={() => navigate(`/property/${property._id}`)}
+          onClick={() => navigate(`/propertyDetails/${property._id}`)}
           className="w-full bg-[#48A6A7] hover:bg-[#006A71] text-white py-2 rounded-md transition-colors duration-300"
         >
           View Details
@@ -173,7 +85,7 @@ const LoadingSkeleton = () => {
 };
 
 const FeaturedListings = () => {
-  const { properties, isLoading, error, refetch} = useAllProperties()
+  const { properties, isLoading, error} = useHomePagePropertys()
   
   return (
     <section className="py-12 px-4 sm:px-6 lg:px-8 bg-[#F2EFE7]">
