@@ -24,11 +24,13 @@ import PrivateRoutes from "../PrivateRoutes/PrivateRoutes";
 import AdminPrivateRoute from "../PrivateRoutes/AdminPrivateRoute";
 import AgentPrivateRoute from "../PrivateRoutes/AgentPrivateRoute";
 import ForbiddenPage from "../pages/extraPages/ForbiddenPage";
+import NotFound from "../pages/NotFound/NotFound";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout></MainLayout>,
+    errorElement: <NotFound></NotFound>,
     children: [
       { index: true, element: <HomePage /> },
       { path: "/login", element: <LoginPage /> },
