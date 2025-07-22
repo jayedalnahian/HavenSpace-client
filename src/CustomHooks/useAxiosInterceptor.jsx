@@ -1,17 +1,29 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useAuth from "./useAuth";
+import { getAuth } from "firebase/auth";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000", // replace with your real API base
+  baseURL: "http://localhost:3000", // Replace with actual API URL in prod
 });
 
 const useAxiosInterceptor = () => {
   const { logout, user } = useAuth();
-  const token = user?.accessToken;
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
-    // Setup request interceptor
+    const getToken = async () => {
+      if (user) {
+        const auth = getAuth();
+        const idToken = await auth.currentUser.getIdToken();
+        setToken(idToken);
+      }
+    };
+
+    getToken();
+  }, [user]);
+
+  useEffect(() => {
     const requestInterceptor = axiosInstance.interceptors.request.use(
       (config) => {
         if (token) {
@@ -22,7 +34,6 @@ const useAxiosInterceptor = () => {
       (error) => Promise.reject(error)
     );
 
-    // Setup response interceptor
     const responseInterceptor = axiosInstance.interceptors.response.use(
       (response) => response,
       (error) => {
@@ -37,7 +48,6 @@ const useAxiosInterceptor = () => {
       }
     );
 
-    // Cleanup interceptors on unmount
     return () => {
       axiosInstance.interceptors.request.eject(requestInterceptor);
       axiosInstance.interceptors.response.eject(responseInterceptor);
