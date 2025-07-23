@@ -290,7 +290,7 @@ const EditPropertyDetails = () => {
                   {...register('propertyType', { required: 'Property type is required' })}
                 >
                   <option value="">Select property type</option>
-                  {propertyTypes.map(type => (
+                  {propertyTypes?.map(type => (
                     <option key={type} value={type}>{type}</option>
                   ))}
                 </select>
@@ -306,7 +306,7 @@ const EditPropertyDetails = () => {
                   {...register('availability', { required: 'Availability status is required' })}
                 >
                   <option value="">Select availability</option>
-                  {availabilityOptions.map(option => (
+                  {availabilityOptions?.map(option => (
                     <option key={option} value={option}>{option}</option>
                   ))}
                 </select>
@@ -321,7 +321,7 @@ const EditPropertyDetails = () => {
               Features
             </label>
             <div className="flex flex-wrap gap-3">
-              {propertyFeatures.map(feature => (
+              {propertyFeatures?.map(feature => (
                 <button
                   key={feature}
                   type="button"

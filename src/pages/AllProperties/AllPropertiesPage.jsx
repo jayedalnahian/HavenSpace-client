@@ -137,7 +137,7 @@ const AllPropertiesPage = () => {
           </p>
         </div>
 
-        {properties.length > 0 ? (
+        {properties?.length > 0 ? (
           <motion.div
             initial="hidden"
             animate="visible"
@@ -150,7 +150,7 @@ const AllPropertiesPage = () => {
             }}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
           >
-            {properties.map((property) => (
+            {properties?.map((property) => (
               <PropertyCard key={property._id} property={property} />
             ))}
           </motion.div>

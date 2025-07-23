@@ -398,7 +398,7 @@ const AddProperty = () => {
                   Features (Select multiple)
                 </label>
                 <div className="grid grid-cols-2 gap-2">
-                  {featuresOptions.map((feature) => (
+                  {featuresOptions?.map((feature) => (
                     <div key={feature} className="flex items-center">
                       <input
                         type="checkbox"
@@ -435,7 +435,7 @@ const AddProperty = () => {
                   }`}
                   style={{ backgroundColor: "#F2EFE7" }}
                 >
-                  {propertyTypes.map((type) => (
+                  {propertyTypes?.map((type) => (
                     <option key={type} value={type}>
                       {type}
                     </option>

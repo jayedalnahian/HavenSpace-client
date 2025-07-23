@@ -139,14 +139,14 @@ const UserBought = () => {
           Your Purchased Properties
         </h1>
         <p className="text-gray-600">
-          {properties.length}{" "}
-          {properties.length === 1 ? "property" : "properties"}
+          {properties?.length}{" "}
+          {properties?.length === 1 ? "property" : "properties"}
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <AnimatePresence>
-          {properties.map((property) => (
+          {properties?.map((property) => (
             <motion.div
               key={property._id}
               initial={{ opacity: 0, y: 20 }}

@@ -34,7 +34,7 @@ const ManageProperties = () => {
 
   // Format properties data
   const formattedProperties = useMemo(() => {
-    return allProperties.map((property) => ({
+    return allProperties?.map((property) => ({
       id: property._id,
       title: property.title,
       image:
@@ -82,17 +82,15 @@ const ManageProperties = () => {
     indexOfFirstProperty,
     indexOfLastProperty
   );
-  const totalPages = Math.ceil(filteredProperties.length / propertiesPerPage);
+  const totalPages = Math.ceil(filteredProperties?.length / propertiesPerPage);
 
   // Count properties by status
   const propertyCounts = useMemo(() => {
     return {
-      all: formattedProperties.length,
-      approved: formattedProperties.filter((p) => p.status === "Approved")
-        .length,
-      pending: formattedProperties.filter((p) => p.status === "Pending").length,
-      rejected: formattedProperties.filter((p) => p.status === "Rejected")
-        .length,
+      all: formattedProperties?.length,
+      approved: formattedProperties.filter((p) => p.status === "Approved")?.length,
+      pending: formattedProperties.filter((p) => p.status === "Pending")?.length,
+      rejected: formattedProperties.filter((p) => p.status === "Rejected")?.length,
     };
   }, [formattedProperties]);
 
@@ -214,7 +212,7 @@ const ManageProperties = () => {
 
         {/* Desktop Table View */}
         <div className="hidden md:block overflow-x-auto">
-          {currentProperties.length > 0 ? (
+          {currentProperties?.length > 0 ? (
             <div className="bg-white rounded-2xl shadow-md min-w-max">
               <table className="w-full divide-y divide-gray-200">
                 <thead>
@@ -243,7 +241,7 @@ const ManageProperties = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {currentProperties.map((property) => (
+                  {currentProperties?.map((property) => (
                     <motion.tr
                       key={property.id}
                       initial={{ opacity: 0 }}
@@ -378,8 +376,8 @@ const ManageProperties = () => {
 
         {/* Mobile Card View */}
         <div className="md:hidden space-y-4">
-          {currentProperties.length > 0 ? (
-            currentProperties.map((property) => (
+          {currentProperties?.length > 0 ? (
+            currentProperties?.map((property) => (
               <motion.div
                 key={property.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -495,7 +493,7 @@ const ManageProperties = () => {
         </div>
 
         {/* Pagination */}
-        {filteredProperties.length > propertiesPerPage && (
+        {filteredProperties?.length > propertiesPerPage && (
           <div className="flex justify-center mt-6">
             <div className="flex items-center gap-2">
               <button
@@ -508,7 +506,7 @@ const ManageProperties = () => {
                 <FaChevronLeft />
               </button>
 
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+              {Array.from({ length: totalPages }, (_, i) => i + 1)?.map(
                 (page) => (
                   <button
                     key={page}

@@ -111,7 +111,7 @@ const RequestedProperties = () => {
 
         {/* Desktop View */}
         <div className="hidden md:block">
-          {requestedProperties.length > 0 ? (
+          {requestedProperties?.length > 0 ? (
             <div className="bg-white rounded-2xl shadow-md overflow-hidden">
               <table className="w-full divide-y divide-gray-200">
                 <thead style={{ backgroundColor: "#9ACBD0" }}>
@@ -134,7 +134,7 @@ const RequestedProperties = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {requestedProperties.map((property) => {
+                  {requestedProperties?.map((property) => {
                     // Find the request with user data (skipping empty objects)
                     const request = property.requestedUserData.find(
                       (item) => item && item.email

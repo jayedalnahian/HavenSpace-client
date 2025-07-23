@@ -103,14 +103,14 @@ const AdvertiseProperties = () => {
   const indexOfLastProperty = currentPage * propertiesPerPage;
   const indexOfFirstProperty = indexOfLastProperty - propertiesPerPage;
   const currentProperties = filteredProperties?.slice(indexOfFirstProperty, indexOfLastProperty);
-  const totalPages = Math.ceil(filteredProperties.length / propertiesPerPage);
+  const totalPages = Math.ceil(filteredProperties?.length / propertiesPerPage);
 
   // Count advertised properties
-  const advertisedCount = properties.filter(p => p.advertised).length;
+  const advertisedCount = properties.filter(p => p.advertised)?.length;
 
   // Toggle advertise status
   const toggleAdvertise = (id) => {
-    setProperties(properties.map(property => 
+    setProperties(properties?.map(property => 
       property.id === id ? { ...property, advertised: !property.advertised } : property
     ));
     
@@ -125,7 +125,7 @@ const AdvertiseProperties = () => {
 
   // Bulk toggle advertise status
   const bulkToggleAdvertise = (advertise) => {
-    setProperties(properties.map(property => ({
+    setProperties(properties?.map(property => ({
       ...property,
       advertised: advertise
     })));
@@ -220,7 +220,7 @@ const AdvertiseProperties = () => {
 
         {/* Desktop Table View */}
         <div className="hidden md:block overflow-x-auto">
-          {currentProperties.length > 0 ? (
+          {currentProperties?.length > 0 ? (
             <div className="bg-white rounded-2xl shadow-md min-w-max">
               <table className="w-full divide-y divide-gray-200">
                 <thead>
@@ -234,7 +234,7 @@ const AdvertiseProperties = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {currentProperties.map((property) => (
+                  {currentProperties?.map((property) => (
                     <motion.tr
                       key={property.id}
                       initial={{ opacity: 0 }}
@@ -343,8 +343,8 @@ const AdvertiseProperties = () => {
 
         {/* Mobile Card View */}
         <div className="md:hidden space-y-4">
-          {currentProperties.length > 0 ? (
-            currentProperties.map((property) => (
+          {currentProperties?.length > 0 ? (
+            currentProperties?.map((property) => (
               <motion.div
                 key={property.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -439,7 +439,7 @@ const AdvertiseProperties = () => {
         </div>
 
         {/* Pagination */}
-        {filteredProperties.length > propertiesPerPage && (
+        {filteredProperties?.length > propertiesPerPage && (
           <div className="flex justify-center mt-6">
             <div className="flex items-center gap-2">
               <button
@@ -454,7 +454,7 @@ const AdvertiseProperties = () => {
                 <FaChevronLeft />
               </button>
               
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+              {Array.from({ length: totalPages }, (_, i) => i + 1)?.map(page => (
                 <button
                   key={page}
                   onClick={() => setCurrentPage(page)}

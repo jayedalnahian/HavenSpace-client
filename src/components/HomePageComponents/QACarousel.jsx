@@ -59,7 +59,7 @@ const FAQAccordion = () => {
         </div>
 
         <div className="space-y-4">
-          {qnaData.map((item, index) => {
+          {qnaData?.map((item, index) => {
             const Icon = item.icon;
             const isOpen = openIndex === index;
 

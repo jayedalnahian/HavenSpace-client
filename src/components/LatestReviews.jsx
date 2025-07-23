@@ -10,7 +10,7 @@ import usePostReviews from "../CustomHooks/usePostReviews";
 const StarRating = ({ rating }) => {
   return (
     <div className="flex">
-      {[...Array(5)].map((_, i) =>
+      {[...Array(5)]?.map((_, i) =>
         i < rating ? (
           <FaStar key={i} className="text-[#48A6A7]" />
         ) : (
@@ -148,7 +148,7 @@ const LatestReviews = ({ property }) => {
           <AddReviewCard onClick={() => handleWriteReview(property)} />
 
           {/* Existing Reviews */}
-          {reviews.map((review) => (
+          {reviews?.map((review) => (
             <ReviewCard key={review._id} review={review} />
           ))}
         </div>

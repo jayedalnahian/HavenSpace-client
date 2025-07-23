@@ -1,15 +1,21 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router"; // Changed from react-router to react-router-dom
 import { StarIcon, HomeIcon } from "@heroicons/react/24/outline";
-import useUserReviews from "../CustomHooks/useUserReviews";
+import useReviewsByUser from "../CustomHooks/useReviewsByUser";
+import useUserData from "../CustomHooks/useUserData";
 
 const UserMyReviews = () => {
-  const { data: reviews = [], isLoading, error, refetch } = useUserReviews();
+  const { userData, isUserLoading} = useUserData()
+  const { reviews = [], isLoading, error, refetch} = useReviewsByUser(userData?.uid);
+  
+ 
+  
+  
   
   // Don't call refetch here unconditionally - it causes infinite re-renders
   // refetch();
 
-  if (isLoading) {
+  if (isLoading || isUserLoading) {
     return (
       <div className="flex justify-center items-center h-64">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
@@ -36,7 +42,7 @@ const UserMyReviews = () => {
     );
   }
 
-  if (!reviews || reviews.length === 0) {
+  if (!reviews || reviews?.length === 0) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
@@ -67,7 +73,7 @@ const UserMyReviews = () => {
       <h1 className="text-3xl font-bold text-text mb-8">My Reviews</h1>
 
       <div className="space-y-6">
-        {reviews.map((review) => (
+        {reviews?.map((review) => (
           <motion.div
             key={review._id}
             initial={{ opacity: 0, y: 20 }}
@@ -79,7 +85,7 @@ const UserMyReviews = () => {
               <div className="flex flex-col md:flex-row md:items-start gap-6">
                 <div className="w-full md:w-1/4">
                   <img
-                    src={review.propertyIMG || "/default-property.jpg"}
+                    src={review.propertyIMG || "https://i.ibb.co/twX9nCPx/oak-Image-1600449152054-super-Jumbo.jpg"}
                     alt={review.title}
                     className="w-full h-40 object-cover rounded-lg"
                   />

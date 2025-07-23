@@ -20,6 +20,7 @@ import {
 } from "react-icons/fa";
 import useUserRole from "../../CustomHooks/useUserRole";
 import LoadingSpinner from "../../components/LoadingSpinner";
+import ErrorPage from "../../components/ErrorPage"
 
 const DashboardLayout = () => {
 
@@ -95,7 +96,7 @@ const DashboardLayout = () => {
   }
 
   if (error) {
-    return <ErrorPage />;
+    return <ErrorPage/>;
   }
 
   return (
@@ -152,7 +153,7 @@ const DashboardLayout = () => {
 
             {/* Navigation links */}
             <ul className="space-y-2">
-              {navLinks.map((link, index) => (
+              {navLinks?.map((link, index) => (
                 <li key={index}>
                   <NavLink
                     to={link.to}

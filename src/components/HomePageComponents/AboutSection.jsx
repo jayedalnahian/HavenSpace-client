@@ -84,7 +84,7 @@ const AboutSection = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {features.map((feature) => (
+          {features?.map((feature) => (
             <FeatureCard
               key={feature.id}
               icon={feature.icon}

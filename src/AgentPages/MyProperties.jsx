@@ -56,12 +56,12 @@ const MyProperties = () => {
     indexOfLastProperty
   );
 
-  const totalPages = Math.ceil(filteredProperties.length / propertiesPerPage);
+  const totalPages = Math.ceil(filteredProperties?.length / propertiesPerPage);
 
   // Get unique property types for filter dropdown
   const propertyTypes = [
     "All",
-    ...new Set(agentAddedPropertys.map((property) => property.propertyType)),
+    ...new Set(agentAddedPropertys?.map((property) => property.propertyType)),
   ];
 
   const handleDelete = (id) => {
@@ -182,7 +182,7 @@ const MyProperties = () => {
                 value={typeFilter}
                 onChange={(e) => setTypeFilter(e.target.value)}
               >
-                {propertyTypes.map((type) => (
+                {propertyTypes?.map((type) => (
                   <option key={type} value={type}>
                     {type}
                   </option>
@@ -193,9 +193,9 @@ const MyProperties = () => {
         </div>
 
         {/* Properties Grid */}
-        {currentProperties.length > 0 ? (
+        {currentProperties?.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {currentProperties.map((property) => (
+            {currentProperties?.map((property) => (
               <motion.div
                 key={property._id}
                 initial={{ opacity: 0, y: 20 }}
@@ -297,7 +297,7 @@ const MyProperties = () => {
         )}
 
         {/* Pagination */}
-        {filteredProperties.length > propertiesPerPage && (
+        {filteredProperties?.length > propertiesPerPage && (
           <div className="flex justify-center mt-8">
             <nav className="flex items-center gap-2">
               <button

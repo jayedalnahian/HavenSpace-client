@@ -49,7 +49,7 @@ const Footer = () => {
               Find Your Perfect Place
             </p>
             <div className="flex space-x-4">
-              {socialLinks.map((social, index) => (
+              {socialLinks?.map((social, index) => (
                 <a
                   key={index}
                   href="#"
@@ -64,7 +64,7 @@ const Footer = () => {
           </div>
 
           {/* Link Columns */}
-          {footerLinks.map((column, index) => (
+          {footerLinks?.map((column, index) => (
             <div key={index}>
               <h3 
                 className="text-lg font-semibold mb-4" 
@@ -73,7 +73,7 @@ const Footer = () => {
                 {column.title}
               </h3>
               <ul className="space-y-2">
-                {column.links.map((link, linkIndex) => (
+                {column.links?.map((link, linkIndex) => (
                   <li key={linkIndex}>
                     <a
                       href="#"

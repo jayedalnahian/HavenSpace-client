@@ -99,7 +99,7 @@ const UserWishList = () => {
             Saved Properties
           </h1>
           <p className="text-gray-600 mt-1">
-            {wishlist.length} {wishlist.length === 1 ? "item" : "items"} in your collection
+            {wishlist?.length} {wishlist?.length === 1 ? "item" : "items"} in your collection
           </p>
         </div>
         <div className="mt-4 md:mt-0 flex items-center space-x-3">
@@ -111,7 +111,7 @@ const UserWishList = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <AnimatePresence>
-          {wishlist.map((property) => {
+          {wishlist?.map((property) => {
             const hasRequested = property.requestedUserData?.some(
               (u) => u?.uid === user?.uid
             );

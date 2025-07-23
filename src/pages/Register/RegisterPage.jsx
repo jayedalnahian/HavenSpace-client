@@ -116,7 +116,7 @@ const RegisterPage = () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
       Swal.fire({ icon: "success", title: "Registered successfully!" });
       reset();
-      navigate("/login");
+      navigate("/");
     },
     onError: (error) => {
       Swal.fire({

@@ -141,7 +141,7 @@ const HomeReviews = () => {
           <AddReviewCard onClick={() => handleWriteReview()} />
 
           {/* Existing Reviews */}
-          {reviews.map((review) => (
+          {reviews?.map((review) => (
             <ReviewCard key={review._id.$oid} review={review} />
           ))}
         </div>

@@ -73,7 +73,7 @@ const PropertyCard = ({ property }) => {
 
         <div className="flex flex-wrap gap-1 mb-4">
           {property?.features?.length > 0 ? (
-            property.features.map((feature, index) => (
+            property.features?.map((feature, index) => (
               <span
                 key={index}
                 className="bg-[#9ACBD0] text-[#006A71] px-2 py-1 rounded-full text-xs"
@@ -114,6 +114,8 @@ const LoadingSkeleton = () => {
 
 const FeaturedListings = () => {
   const { properties, isLoading, error } = useHomePagePropertys();
+
+  
   
 
   return (
@@ -143,10 +145,9 @@ const FeaturedListings = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {isLoading ? (
             Array(4)
-              .fill(0)
-              .map((_, index) => <LoadingSkeleton key={index} />)
+              .fill(0).map((_, index) => <LoadingSkeleton key={index} />)
           ) : properties?.length > 0 ? (
-            properties.slice(0, 4).map((property) => (
+            properties.slice(0, 4)?.map((property) => (
               <PropertyCard key={property._id} property={property} />
             ))
           ) : (

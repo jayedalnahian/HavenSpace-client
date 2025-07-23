@@ -152,13 +152,13 @@ const PropertyDetailsPage = () => {
                 <p className="text-gray-700">{property.description}</p>
               </div>
 
-              {property.features && property.features.length > 0 && (
+              {property.features && property.features?.length > 0 && (
                 <div className="mb-6">
                   <h2 className="text-xl font-semibold text-text mb-2">
                     Features
                   </h2>
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                    {property.features.map((feature, index) => (
+                    {property.features?.map((feature, index) => (
                       <li key={index} className="flex items-center">
                         <span className="w-2 h-2 bg-primary rounded-full mr-2"></span>
                         <span>{feature}</span>

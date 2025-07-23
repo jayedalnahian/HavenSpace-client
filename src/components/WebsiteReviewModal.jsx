@@ -41,7 +41,7 @@ const WebsiteReviewModal = ({ property, onClose, onSubmit }) => {
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Your Rating</label>
             <div className="flex">
-              {[1, 2, 3, 4, 5].map((star) => (
+              {[1, 2, 3, 4, 5]?.map((star) => (
                 <button
                   key={star}
                   type="button"

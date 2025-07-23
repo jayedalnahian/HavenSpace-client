@@ -25,9 +25,9 @@ const SoldProperties = () => {
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold text-[#006A71] mb-6">Accepted Properties</h1>
 
-        {requestedProperties && requestedProperties.length > 0 ? (
+        {requestedProperties && requestedProperties?.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {requestedProperties.map((property) => {
+            {requestedProperties?.map((property) => {
               const buyer = property.requestedUserData?.[0] || {};
               return (
                 <motion.div

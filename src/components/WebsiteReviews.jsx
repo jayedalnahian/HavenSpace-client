@@ -135,7 +135,7 @@ const WebsiteReviews = ({ property }) => {
           <AddReviewCard onClick={() => handleWriteReview(property)} />
 
           {/* Existing Reviews */}
-          {reviews.map((review) => (
+          {reviews?.map((review) => (
             <ReviewCard key={review._id} review={review} />
           ))}
         </div>

@@ -13,7 +13,7 @@ const ManageReviews = () => {
   const renderStars = (rating) => {
     return (
       <div className="flex items-center">
-        {[...Array(5)].map((_, i) => (
+        {[...Array(5)]?.map((_, i) => (
           <FaStar
             key={i}
             className={i < rating ? "text-yellow-400" : "text-gray-300"}
@@ -102,13 +102,13 @@ const ManageReviews = () => {
         <div className="bg-white rounded-lg shadow p-4 mb-6 text-center">
           <p className="text-sm text-gray-500">Total Reviews</p>
           <p className="text-2xl font-bold" style={{ color: "#006A71" }}>
-            {userReviews.length}
+            {userReviews?.length}
           </p>
         </div>
 
         {/* Desktop Table View */}
         <div className="hidden md:block overflow-x-auto">
-          {userReviews.length > 0 ? (
+          {userReviews?.length > 0 ? (
             <div className="bg-white rounded-2xl shadow-md min-w-max">
               <table className="w-full divide-y divide-gray-200">
                 <thead>
@@ -146,7 +146,7 @@ const ManageReviews = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {userReviews.map((review) => (
+                  {userReviews?.map((review) => (
                     <motion.tr
                       key={review._id}
                       initial={{ opacity: 0 }}
@@ -241,8 +241,8 @@ const ManageReviews = () => {
 
         {/* Mobile Card View */}
         <div className="md:hidden space-y-4">
-          {userReviews.length > 0 ? (
-            userReviews.map((review) => (
+          {userReviews?.length > 0 ? (
+            userReviews?.map((review) => (
               <motion.div
                 key={review._id}
                 initial={{ opacity: 0, y: 20 }}

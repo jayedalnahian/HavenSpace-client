@@ -107,7 +107,7 @@ const ReportedProperties = () => {
   const indexOfLastReport = currentPage * reportsPerPage;
   const indexOfFirstReport = indexOfLastReport - reportsPerPage;
   const currentReports = filteredReports?.slice(indexOfFirstReport, indexOfLastReport);
-  const totalPages = Math.ceil(filteredReports.length / reportsPerPage);
+  const totalPages = Math.ceil(filteredReports?.length / reportsPerPage);
 
   // Status badge styling
   const getStatusBadgeClass = (status) => {
@@ -126,7 +126,7 @@ const ReportedProperties = () => {
   // Handle actions
   const handleRemoveProperty = (id) => {
     // In a real app, this would make an API call
-    setReports(reports.map(report => 
+    setReports(reports?.map(report => 
       report.id === id ? { ...report, status: 'Resolved' } : report
     ));
     toast.success('Property removed successfully!', {
@@ -144,7 +144,7 @@ const ReportedProperties = () => {
   };
 
   const handleIgnoreReport = (id) => {
-    setReports(reports.map(report => 
+    setReports(reports?.map(report => 
       report.id === id ? { ...report, status: 'Resolved' } : report
     ));
     toast.info('Report marked as resolved', {
@@ -221,7 +221,7 @@ const ReportedProperties = () => {
 
         {/* Desktop Table View */}
         <div className="hidden md:block overflow-x-auto">
-          {currentReports.length > 0 ? (
+          {currentReports?.length > 0 ? (
             <div className="bg-white rounded-2xl shadow-md min-w-max">
               <table className="w-full divide-y divide-gray-200">
                 <thead>
@@ -236,7 +236,7 @@ const ReportedProperties = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {currentReports.map((report) => (
+                  {currentReports?.map((report) => (
                     <motion.tr
                       key={report.id}
                       initial={{ opacity: 0 }}
@@ -376,8 +376,8 @@ const ReportedProperties = () => {
 
         {/* Mobile Card View */}
         <div className="md:hidden space-y-4">
-          {currentReports.length > 0 ? (
-            currentReports.map((report) => (
+          {currentReports?.length > 0 ? (
+            currentReports?.map((report) => (
               <motion.div
                 key={report.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -508,7 +508,7 @@ const ReportedProperties = () => {
         </div>
 
         {/* Pagination */}
-        {filteredReports.length > reportsPerPage && (
+        {filteredReports?.length > reportsPerPage && (
           <div className="flex justify-center mt-6">
             <div className="flex items-center gap-2">
               <button
