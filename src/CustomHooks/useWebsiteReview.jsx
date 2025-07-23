@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosInterceptor from "./useAxiosInterceptor";
+
+import axios from "axios";
 
 const useWebsiteReview = () => {
-  const axiosSecure = useAxiosInterceptor();
+
 
   const {
     data: reviews,
@@ -12,7 +13,7 @@ const useWebsiteReview = () => {
   } = useQuery({
     queryKey: ["propertiesReviews"],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/api/reviews?reviewFor=website`);
+      const res = await axios.get(`https://b11a12-server-side-jayedalnahian.vercel.app/api/reviews?reviewFor=website`);
 
       return res.data;
     },

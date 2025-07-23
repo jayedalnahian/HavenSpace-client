@@ -6,8 +6,13 @@ import useHomePagePropertys from "../../CustomHooks/useHomePagePropertys";
 const PropertyCard = ({ property }) => {
   const navigate = useNavigate();
 
-  const isVerified = property.availability !== "Sold";
-  const priceRange = `$${property.minPrice.toLocaleString()} - $${property.maxPrice.toLocaleString()}`;
+  // Add null checks for property and its properties
+  if (!property) return null;
+
+  const isVerified = property?.availability !== "Sold";
+  const priceRange = property?.minPrice && property?.maxPrice 
+    ? `$${property.minPrice.toLocaleString()} - $${property.maxPrice.toLocaleString()}`
+    : 'Price not available';
 
   return (
     <motion.div
@@ -16,18 +21,18 @@ const PropertyCard = ({ property }) => {
     >
       <div className="relative h-48 overflow-hidden">
         <img
-          src={property.image}
-          alt={property.title}
+          src={property?.image || '/placeholder-property.jpg'}
+          alt={property?.title || 'Property image'}
           className="w-full h-full object-cover"
         />
         <div className="absolute top-2 right-2 bg-[#006A71] text-white px-2 py-1 rounded-md text-xs font-semibold">
-          {property.propertyType}
+          {property?.propertyType || 'Property'}
         </div>
       </div>
 
       <div className="p-4">
         <h3 className="text-[#006A71] font-bold text-lg mb-1 truncate">
-          {property.title}
+          {property?.title || 'Untitled Property'}
         </h3>
         <p className="text-gray-600 text-sm mb-2 flex items-center">
           <svg
@@ -50,7 +55,7 @@ const PropertyCard = ({ property }) => {
               d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
             />
           </svg>
-          {property.location}
+          {property?.location || 'Location not specified'}
         </p>
 
         <div className="flex justify-between items-center mb-3">
@@ -62,12 +67,12 @@ const PropertyCard = ({ property }) => {
                 : "bg-red-100 text-red-800"
             }`}
           >
-            {property.availability}
+            {property?.availability || 'Availability unknown'}
           </span>
         </div>
 
         <div className="flex flex-wrap gap-1 mb-4">
-          {Array.isArray(property?.features) ? (
+          {property?.features?.length > 0 ? (
             property.features.map((feature, index) => (
               <span
                 key={index}
@@ -77,12 +82,12 @@ const PropertyCard = ({ property }) => {
               </span>
             ))
           ) : (
-            <span className="text-xs text-red-500">No features listed</span>
+            <span className="text-xs text-gray-500">No features listed</span>
           )}
         </div>
 
         <button
-          onClick={() => navigate(`/propertyDetails/${property._id}`)}
+          onClick={() => navigate(`/propertyDetails/${property?._id || ''}`)}
           className="w-full bg-[#48A6A7] hover:bg-[#006A71] text-white py-2 rounded-md transition-colors duration-300"
         >
           View Details
@@ -109,6 +114,7 @@ const LoadingSkeleton = () => {
 
 const FeaturedListings = () => {
   const { properties, isLoading, error } = useHomePagePropertys();
+  
 
   return (
     <section className="py-12 px-4 sm:px-6 lg:px-8 bg-[#F2EFE7]">
@@ -135,18 +141,24 @@ const FeaturedListings = () => {
         )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {isLoading
-            ? Array(4)
-                .fill(0)
-                .map((_, index) => <LoadingSkeleton key={index} />)
-            : properties
-                .slice(0, 4)
-                .map((property) => (
-                  <PropertyCard key={property._id} property={property} />
-                ))}
+          {isLoading ? (
+            Array(4)
+              .fill(0)
+              .map((_, index) => <LoadingSkeleton key={index} />)
+          ) : properties?.length > 0 ? (
+            properties.slice(0, 4).map((property) => (
+              <PropertyCard key={property._id} property={property} />
+            ))
+          ) : (
+            !error && (
+              <div className="col-span-4 text-center py-8">
+                No properties available at the moment.
+              </div>
+            )
+          )}
         </div>
 
-        {!isLoading && properties.length > 4 && (
+        {!isLoading && properties?.length > 4 && (
           <div className="text-center mt-8">
             <button className="bg-[#9ACBD0] hover:bg-[#48A6A7] text-[#006A71] font-semibold py-2 px-6 rounded-full transition-colors duration-300">
               View All Properties

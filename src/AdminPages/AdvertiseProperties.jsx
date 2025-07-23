@@ -102,7 +102,7 @@ const AdvertiseProperties = () => {
   // Pagination logic
   const indexOfLastProperty = currentPage * propertiesPerPage;
   const indexOfFirstProperty = indexOfLastProperty - propertiesPerPage;
-  const currentProperties = filteredProperties.slice(indexOfFirstProperty, indexOfLastProperty);
+  const currentProperties = filteredProperties?.slice(indexOfFirstProperty, indexOfLastProperty);
   const totalPages = Math.ceil(filteredProperties.length / propertiesPerPage);
 
   // Count advertised properties

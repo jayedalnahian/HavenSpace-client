@@ -51,7 +51,7 @@ const MyProperties = () => {
   // Pagination logic
   const indexOfLastProperty = currentPage * propertiesPerPage;
   const indexOfFirstProperty = indexOfLastProperty - propertiesPerPage;
-  const currentProperties = filteredProperties.slice(
+  const currentProperties = filteredProperties?.slice(
     indexOfFirstProperty,
     indexOfLastProperty
   );
