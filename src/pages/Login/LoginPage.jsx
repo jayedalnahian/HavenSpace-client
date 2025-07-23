@@ -16,6 +16,9 @@ const LoginPage = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
+  useEffect(() => {
+    document.title = "HavenSpace | Login";
+  }, []);
 
   useEffect(() => {
     Aos.init({

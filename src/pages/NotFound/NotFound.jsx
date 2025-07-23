@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router';
 
 const NotFound = () => {
+    useEffect(() => {
+        document.title = "HavenSpace | Not Found";
+      }, []);
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center text-center px-6">
       <h1 className="text-6xl font-extrabold text-red-500">404</h1>

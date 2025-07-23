@@ -1,8 +1,12 @@
 import { Link } from "react-router";
 import { motion } from "framer-motion";
 import { FaBan } from "react-icons/fa";
+import { useEffect } from "react";
 
 const ForbiddenPage = () => {
+  useEffect(() => {
+      document.title = "HavenSpace | Forbidden";
+    }, []);
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-4">
       <motion.div

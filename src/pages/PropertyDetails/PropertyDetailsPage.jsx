@@ -1,5 +1,5 @@
 // import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import useAxiosInterceptor from "../../CustomHooks/useAxiosInterceptor";
 import { useParams } from "react-router";
 import {
@@ -30,7 +30,9 @@ const PropertyDetailsPage = () => {
     property?.wishlistUsersData?.some((user) => user?.uid === userData?.uid) ||
     false;
 
-
+  useEffect(() => {
+    document.title = "HavenSpace | Property Details";
+  }, []);
 
   const handleAddToWishlist = async () => {
     const user = {
@@ -45,8 +47,6 @@ const PropertyDetailsPage = () => {
 
     mutate({ propertyId, wishlistUser: user });
   };
-
-  
 
   if (isLoading || roleLoading || isUserLoading) {
     return (

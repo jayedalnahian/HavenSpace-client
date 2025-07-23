@@ -51,6 +51,11 @@ const EditPropertyDetails = () => {
     watch
   } = useForm();
 
+
+  useEffect(() => {
+    document.title = "HavenSpace | Edit Propertys";
+  }, []);
+
   // Set form values when property data is loaded
   useEffect(() => {
     if (property) {

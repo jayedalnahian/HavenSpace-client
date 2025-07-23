@@ -4,6 +4,7 @@ import { FiHome, FiMapPin, FiDollarSign } from "react-icons/fi";
 import { FaBed, FaBath, FaRulerCombined } from "react-icons/fa";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import useAllApprovedPropertys from "../../CustomHooks/useAllApprovedPropertys";
+import { useEffect } from "react";
 
 const propertyCardVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -85,8 +86,18 @@ const PropertyCard = ({ property }) => {
 };
 
 const AllPropertiesPage = () => {
-  const { properties = [], isLoading, error, refetch } = useAllApprovedPropertys();
+  const {
+    properties = [],
+    isLoading,
+    error,
+    refetch,
+  } = useAllApprovedPropertys();
   refetch();
+
+  useEffect(() => {
+    document.title = "HavenSpace | All Propertys";
+  }, []);
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-[#F2EFE7] flex items-center justify-center p-8">

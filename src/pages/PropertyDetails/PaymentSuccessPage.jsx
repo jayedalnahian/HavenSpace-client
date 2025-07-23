@@ -8,6 +8,10 @@ const PaymentSuccessPage = () => {
   const [paymentStatus, setPaymentStatus] = useState("verifying");
 
   useEffect(() => {
+    document.title = "HavenSpace | Payment Success";
+  }, []);
+
+  useEffect(() => {
     const verifyPayment = async () => {
       try {
         const response = await axios.get("https://b11a12-server-side-jayedalnahian.vercel.app/api/payment/verify", {

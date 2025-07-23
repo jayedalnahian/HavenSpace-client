@@ -22,6 +22,10 @@ import useUserRole from "../../CustomHooks/useUserRole";
 import LoadingSpinner from "../../components/LoadingSpinner";
 
 const DashboardLayout = () => {
+
+  useEffect(() => {
+    document.title = "HavenSpace | Dashboard";
+  }, []);
   // Define all navigation options
   const agentNavLinks = [
     { to: "/dashboard", icon: <FaUser />, text: "My Profile" },

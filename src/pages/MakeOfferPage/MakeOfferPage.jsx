@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useParams, useNavigate } from "react-router";
 import { MdLocationOn, MdPerson, MdAttachMoney } from "react-icons/md";
 import { FaRegCalendarAlt } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useSingleProperty from "../../CustomHooks/useSingleProperty";
 import useAuth from "../../CustomHooks/useAuth";
 import useUserData from "../../CustomHooks/useUserData";
@@ -18,6 +18,10 @@ const MakeOfferPage = () => {
   const [buyingDate, setBuyingDate] = useState("");
   const [formError, setFormError] = useState("");
   const { sendOffer, isPending: isSendOfferPending } = useSendOffer();
+
+  useEffect(() => {
+    document.title = "HavenSpace | Make Offer";
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();

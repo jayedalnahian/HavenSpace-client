@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { FcGoogle } from "react-icons/fc";
 import Swal from "sweetalert2";
@@ -24,9 +24,13 @@ const RegisterPage = () => {
   const { registerUser, googleLogin, user } = useAuth();
   const [isUploading, setIsUploading] = useState(false);
   const [photoUrl, setPhotoUrl] = useState("");
-  
+
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+
+  useEffect(() => {
+    document.title = "HavenSpace | Register";
+  }, []);
 
   const {
     register,
@@ -212,10 +216,13 @@ const RegisterPage = () => {
               errors={errors}
               type="date"
             />
-            
+
             {/* Image Upload Field */}
             <div className="space-y-1">
-              <label htmlFor="photo" className="block text-sm font-medium text-[#006A71]">
+              <label
+                htmlFor="photo"
+                className="block text-sm font-medium text-[#006A71]"
+              >
                 Profile Photo
               </label>
               <div className="flex items-center gap-4">
@@ -284,10 +291,7 @@ const RegisterPage = () => {
                   />
                 </div>
               )}
-              <input
-                type="hidden"
-                {...register("photo")}
-              />
+              <input type="hidden" {...register("photo")} />
             </div>
 
             <InputField
