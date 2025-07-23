@@ -68,28 +68,16 @@ const PropertyCard = ({ property }) => {
 
         <div className="flex flex-wrap gap-1 mb-4">
           {Array.isArray(property?.features) ? (
-            <>
-              {property.features.slice(0, 3).map((feature, index) => (
-                <span
-                  key={index}
-                  className="bg-[#9ACBD0] text-[#006A71] px-2 py-1 rounded-full text-xs"
-                >
-                  {feature}
-                </span>
-              ))}
-              {property.features.length > 3 && (
-                <span className="bg-[#F2EFE7] text-[#006A71] px-2 py-1 rounded-full text-xs">
-                  +{property.features.length - 3}
-                </span>
-              )}
-            </>
+            property.features.map((feature, index) => (
+              <span
+                key={index}
+                className="bg-[#9ACBD0] text-[#006A71] px-2 py-1 rounded-full text-xs"
+              >
+                {feature}
+              </span>
+            ))
           ) : (
             <span className="text-xs text-red-500">No features listed</span>
-          )}
-          {property.features.length > 3 && (
-            <span className="bg-[#F2EFE7] text-[#006A71] px-2 py-1 rounded-full text-xs">
-              +{property.features.length - 3}
-            </span>
           )}
         </div>
 

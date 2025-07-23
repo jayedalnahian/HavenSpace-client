@@ -1,0 +1,8 @@
+Assignment Category/variant: category_008
+Admin email: sably@gmail.com
+Admin password: 123zxcZXC
+Agent email: jnahian752@gmail.com
+Agent password: 123zxcZXC
+Front-end Live Site Link: https://explore-email-password-a-801d9.web.app/
+Client Side Github Repository Link: https://github.com/Programming-Hero-Web-Course4/b11a12-client-side-jayedalnahian
+Server Side Github Repository Link: https://github.com/Programming-Hero-Web-Course4/b11a12-server-side-jayedalnahian
