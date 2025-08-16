@@ -17,7 +17,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import useAuth from "../../CustomHooks/useAuth";
 
-const IMGBB_API_KEY = "2e1c7fe21ce6c1d4a08100cd99fc90f8";
+const IMGBB__KEY = "2e1c7fe21ce6c1d4a08100cd99fc90f8";
 const IMGBB_API_URL = "https://api.imgbb.com/1/upload";
 
 const RegisterPage = () => {
@@ -104,7 +104,7 @@ const RegisterPage = () => {
   const saveUserMutation = useMutation({
     mutationFn: async (userData) => {
       const res = await axios.post(
-        "https://b11a12-server-side-jayedalnahian.vercel.app/auth/register",
+        "http://localhost:3000/auth/register",
         userData
       );
       if (res.status !== 200) {

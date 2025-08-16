@@ -4,6 +4,7 @@ import FeaturedListings from '../../components/HomePageComponents/FeaturedListin
 import QACarousel from '../../components/HomePageComponents/QACarousel';
 import AboutSection from '../../components/HomePageComponents/AboutSection';
 import WebsiteReviews from '../../components/WebsiteReviews';
+import PropertySearch from '../../components/HomePageComponents/PropertySearch';
 
 const HomePage = () => {
     useEffect(() => {
@@ -12,6 +13,7 @@ const HomePage = () => {
     return (
         <div>
            <HeroSection></HeroSection>
+           < PropertySearch></PropertySearch>
            <FeaturedListings></FeaturedListings>
            <WebsiteReviews></WebsiteReviews>
            <QACarousel></QACarousel>

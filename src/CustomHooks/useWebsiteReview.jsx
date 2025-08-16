@@ -13,7 +13,7 @@ const useWebsiteReview = () => {
   } = useQuery({
     queryKey: ["propertiesReviews"],
     queryFn: async () => {
-      const res = await axios.get(`https://b11a12-server-side-jayedalnahian.vercel.app/api/reviews?reviewFor=website`);
+      const res = await axios.get(`http://localhost:3000/api/reviews?reviewFor=website`);
 
       return res.data;
     },

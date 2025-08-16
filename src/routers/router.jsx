@@ -25,6 +25,7 @@ import AdminPrivateRoute from "../PrivateRoutes/AdminPrivateRoute";
 import AgentPrivateRoute from "../PrivateRoutes/AgentPrivateRoute";
 import ForbiddenPage from "../pages/extraPages/ForbiddenPage";
 import NotFound from "../pages/NotFound/NotFound";
+import About from "../pages/About/About";
 
 const router = createBrowserRouter([
   {
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
             <PaymentSuccessPage></PaymentSuccessPage>
           </PrivateRoutes>
         ),
+      },
+      {
+        path: "/about",
+        element: <About></About>
       },
       {
         path: "/all-properties",

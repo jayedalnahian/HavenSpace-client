@@ -4,7 +4,7 @@ import useAuth from "./useAuth";
 import { getAuth } from "firebase/auth";
 
 const axiosInstance = axios.create({
-  baseURL: "https://b11a12-server-side-jayedalnahian.vercel.app", // Replace with actual API URL in prod
+  baseURL: "http://localhost:3000", // Replace with actual API URL in prod
 });
 
 const useAxiosInterceptor = () => {

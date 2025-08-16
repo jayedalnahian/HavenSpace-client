@@ -14,7 +14,7 @@ const PaymentSuccessPage = () => {
   useEffect(() => {
     const verifyPayment = async () => {
       try {
-        const response = await axios.get("https://b11a12-server-side-jayedalnahian.vercel.app/api/payment/verify", {
+        const response = await axios.get("http://localhost:3000/api/payment/verify", {
           params: { session_id: sessionId },
         });
 

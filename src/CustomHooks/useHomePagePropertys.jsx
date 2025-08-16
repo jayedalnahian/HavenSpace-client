@@ -11,7 +11,7 @@ const useHomePagePropertys = () => {
   } = useQuery({
     queryKey: ["HomePagePropertys"],
     queryFn: async () => {
-      const res = await axios.get(`https://b11a12-server-side-jayedalnahian.vercel.app/api/home-properties`);
+      const res = await axios.get(`http://localhost:3000/api/home-properties`);
 
       return res.data;
     },
