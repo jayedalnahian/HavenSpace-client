@@ -100,7 +100,7 @@ export default function PropertySearch() {
   };
 
   return (
-    <section className="w-full py-10 bg-white/80 backdrop-blur-sm">
+    <section className="w-full py-10 backdrop-blur-sm">
       <div className="container mx-auto px-6">
         {/* Search Bar */}
         <motion.div

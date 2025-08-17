@@ -41,7 +41,7 @@ const Newsletter = () => {
         mutate(email)
     }
     return (
-        <section className="bg-white py-16 px-6">
+        <section className=" py-16 px-6">
             <div className="max-w-4xl mx-auto text-center">
                 {/* Heading */}
                 <h2 className="text-3xl md:text-4xl font-bold text-[#006A71] mb-4">
