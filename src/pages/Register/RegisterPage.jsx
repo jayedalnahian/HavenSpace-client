@@ -68,7 +68,7 @@ const RegisterPage = () => {
 
     const formData = new FormData();
     formData.append("image", file);
-    formData.append("key", IMGBB_API_KEY);
+    formData.append("key", IMGBB__KEY);
 
     try {
       setIsUploading(true);
@@ -104,7 +104,7 @@ const RegisterPage = () => {
   const saveUserMutation = useMutation({
     mutationFn: async (userData) => {
       const res = await axios.post(
-        "http://localhost:3000/auth/register",
+        "https://havenspace.vercel.app/auth/register",
         userData
       );
       if (res.status !== 200) {

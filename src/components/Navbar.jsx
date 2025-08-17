@@ -8,8 +8,8 @@ import useUserData from "../CustomHooks/useUserData";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
-  const {userData: userInformations} = useUserData()
-  
+  const { userData: userInformations } = useUserData()
+
 
   const logOutUser = () => {
     logOut()
@@ -66,11 +66,25 @@ const Navbar = () => {
           About
         </NavLink>
       </li>
+      {user && (
+        <li>
+          <NavLink
+            to="/dashboard"
+            className={({ isActive }) =>
+              isActive ? "text-[#006A71] font-bold" : " hover:text-[#48A6A7]"
+            }
+          >
+            Profile
+          </NavLink>
+        </li>
+      )}
     </>
   );
 
   const loginSection = (
     <div className="flex items-center gap-3">
+
+
       {!user && (
         <NavLink
           to="/login"
@@ -87,11 +101,14 @@ const Navbar = () => {
           Register
         </NavLink>
       )}
-      {user && (
-        <button className="btn btn-ghost btn-circle hover:bg-[#9ACBD0]/20">
-          <IoIosNotifications size={22} className="text-[#006A71]" />
-        </button>
-      )}
+
+      {user && (<button
+        onClick={logOutUser}
+        className="text-[#006A71] btn hover:bg-[#9ACBD0]/30"
+      >
+        Log Out
+      </button>)}
+
       {user && (
         <div className="dropdown dropdown-end">
           <label
@@ -109,27 +126,6 @@ const Navbar = () => {
               ) || <CgProfile size={40} className="text-[#006A71]" />}
             </div>
           </label>
-          <ul
-            tabIndex={0}
-            className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-[#F2EFE7] rounded-box w-40 border border-[#9ACBD0]"
-          >
-            <li>
-              <Link
-                to="/dashboard"
-                className="text-[#006A71] hover:bg-[#9ACBD0]/30"
-              >
-                Profile
-              </Link>
-            </li>
-            <li>
-              <button
-                onClick={logOutUser}
-                className="text-[#006A71] hover:bg-[#9ACBD0]/30"
-              >
-                Log Out
-              </button>
-            </li>
-          </ul>
         </div>
       )}
     </div>

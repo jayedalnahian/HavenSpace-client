@@ -68,7 +68,7 @@ const PropertyCard = ({ property }) => {
         </div>
 
         <Link
-          to={`/property-details/${property._id}`}
+          to={`/propertyDetails/${property._id}`}
           className="block w-full py-2 bg-[#48A6A7] hover:bg-[#006A71] text-white text-center rounded transition-colors duration-300"
         >
           View Details

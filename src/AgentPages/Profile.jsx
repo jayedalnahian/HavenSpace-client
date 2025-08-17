@@ -157,8 +157,8 @@ const Profile = () => {
               </div>
             </div>
 
-            {/* Action Buttons */}
-            <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+            
+            {/* <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
               <button
                 className="flex items-center justify-center px-6 py-3 rounded-lg font-medium transition-colors bg-[#48A6A7] text-[#F2EFE7] hover:bg-[#006A71]"
               >
@@ -171,7 +171,7 @@ const Profile = () => {
                 <FaKey className="mr-2" />
                 Change Password
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

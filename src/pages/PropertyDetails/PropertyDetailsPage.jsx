@@ -1,6 +1,6 @@
-// import { useQuery } from "@tanstack/react-query";
+
 import React, { useEffect, useState } from "react";
-// import useAxiosInterceptor from "../../CustomHooks/useAxiosInterceptor";
+
 import { useParams } from "react-router";
 import {
   FaBed,
@@ -60,10 +60,10 @@ const PropertyDetailsPage = () => {
     return (
       <div className="flex justify-center items-center h-screen bg-background">
         <div className="text-center p-6 bg-white rounded-lg shadow-md max-w-md">
-          <h2 className="text-xl font-semibold text-text mb-4">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">
             Error Loading Property
           </h2>
-          <p className="text-gray-600 mb-4">
+          <p className="text-gray-700 mb-4">
             {error.message ||
               "Failed to load property details. Please try again later."}
           </p>
@@ -82,10 +82,10 @@ const PropertyDetailsPage = () => {
     return (
       <div className="flex justify-center items-center h-screen bg-background">
         <div className="text-center p-6 bg-white rounded-lg shadow-md max-w-md">
-          <h2 className="text-xl font-semibold text-text mb-4">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">
             Property Not Found
           </h2>
-          <p className="text-gray-600 mb-4">
+          <p className="text-gray-700 mb-4">
             The requested property could not be found.
           </p>
         </div>
@@ -94,7 +94,7 @@ const PropertyDetailsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background pb-12">
+    <div className="min-h-screen pb-12">
       {/* Banner Image */}
       <div className="h-64 md:h-96 w-full overflow-hidden">
         <img
@@ -110,35 +110,35 @@ const PropertyDetailsPage = () => {
           {/* Left Column - Property Details */}
           <div className="lg:w-2/3">
             <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-              <h1 className="text-3xl font-bold text-text mb-2">
+              <h1 className="text-3xl font-bold text-gray-800 mb-2">
                 {property.title}
               </h1>
 
-              <div className="flex items-center text-gray-600 mb-4">
+              <div className="flex items-center text-gray-700 mb-4">
                 <MdLocationOn className="text-secondary mr-1" />
                 <span>{property.location}</span>
               </div>
 
               <div className="flex flex-wrap gap-4 mb-6">
-                <div className="flex items-center bg-secondary bg-opacity-20 px-3 py-1 rounded-full">
+                <div className="flex items-center bg-secondary bg-opacity-20 px-3 py-1 rounded-full text-gray-800">
                   <FaBed className="text-primary mr-2" />
                   <span>
                     {property.bedrooms}{" "}
                     {property.bedrooms === 1 ? "Bed" : "Beds"}
                   </span>
                 </div>
-                <div className="flex items-center bg-secondary bg-opacity-20 px-3 py-1 rounded-full">
+                <div className="flex items-center bg-secondary bg-opacity-20 px-3 py-1 rounded-full text-gray-800">
                   <FaBath className="text-primary mr-2" />
                   <span>
                     {property.bathrooms}{" "}
                     {property.bathrooms === 1 ? "Bath" : "Baths"}
                   </span>
                 </div>
-                <div className="flex items-center bg-secondary bg-opacity-20 px-3 py-1 rounded-full">
+                <div className="flex items-center bg-secondary bg-opacity-20 px-3 py-1 rounded-full text-gray-800">
                   <FaRulerCombined className="text-primary mr-2" />
                   <span>{property.areaSize} sq.ft</span>
                 </div>
-                <div className="flex items-center bg-secondary bg-opacity-20 px-3 py-1 rounded-full">
+                <div className="flex items-center bg-secondary bg-opacity-20 px-3 py-1 rounded-full text-gray-800">
                   <span className="text-primary font-medium">
                     {property.propertyType}
                   </span>
@@ -146,7 +146,7 @@ const PropertyDetailsPage = () => {
               </div>
 
               <div className="mb-6">
-                <h2 className="text-xl font-semibold text-text mb-2">
+                <h2 className="text-xl font-semibold text-gray-800 mb-2">
                   Description
                 </h2>
                 <p className="text-gray-700">{property.description}</p>
@@ -154,12 +154,12 @@ const PropertyDetailsPage = () => {
 
               {property.features && property.features?.length > 0 && (
                 <div className="mb-6">
-                  <h2 className="text-xl font-semibold text-text mb-2">
+                  <h2 className="text-xl font-semibold text-gray-800 mb-2">
                     Features
                   </h2>
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
                     {property.features?.map((feature, index) => (
-                      <li key={index} className="flex items-center">
+                      <li key={index} className="flex items-center text-gray-700">
                         <span className="w-2 h-2 bg-primary rounded-full mr-2"></span>
                         <span>{feature}</span>
                       </li>
@@ -174,7 +174,7 @@ const PropertyDetailsPage = () => {
           <div className="lg:w-1/3">
             <div className="bg-white rounded-lg shadow-md p-6 sticky top-4">
               <div className="mb-6">
-                <h2 className="text-xl font-semibold text-text mb-2">
+                <h2 className="text-xl font-semibold text-gray-800 mb-2">
                   Pricing
                 </h2>
                 <div className="text-2xl font-bold text-primary">
@@ -188,7 +188,7 @@ const PropertyDetailsPage = () => {
               </div>
 
               <div className="mb-6">
-                <h2 className="text-xl font-semibold text-text mb-2">
+                <h2 className="text-xl font-semibold text-gray-800 mb-2">
                   Contact Agent
                 </h2>
                 <div className="flex items-center mb-3">
@@ -198,7 +198,7 @@ const PropertyDetailsPage = () => {
                     </span>
                   </div>
                   <div>
-                    <div className="font-medium text-text">
+                    <div className="font-medium text-gray-800">
                       {property.agentName || "Agent"}
                     </div>
                     <div className="text-sm text-gray-600">
@@ -220,7 +220,7 @@ const PropertyDetailsPage = () => {
                   <button
                     onClick={handleAddToWishlist}
                     disabled={alreadyInWishlist || isPending}
-                    className={`w-full bg-secondary hover:bg-secondary-dark text-text font-medium py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center ${
+                    className={`w-full bg-secondary hover:bg-secondary-dark text-gray-800 font-medium py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center ${
                       alreadyInWishlist || isPending
                         ? "opacity-50 cursor-not-allowed"
                         : ""

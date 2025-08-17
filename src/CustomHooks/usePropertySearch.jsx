@@ -1,9 +1,9 @@
 // usePropertySearch.js
 import { useQuery } from '@tanstack/react-query';
-import useAxiosInterceptor from './useAxiosInterceptor';
+import axios from 'axios';
+
 
 const usePropertySearch = (searchParams) => {
-  const axiosSecure = useAxiosInterceptor();
   
   return useQuery({
     queryKey: ['properties', searchParams],
@@ -18,7 +18,7 @@ const usePropertySearch = (searchParams) => {
         params.priceRange = searchParams.priceRange;
       }
 
-      const { data } = await axiosSecure.get('/properties/search', { params });
+      const { data } = await axios.get('https://havenspace.vercel.app/properties/search', { params });
       return data;
     },
     staleTime: 1000 * 60 * 5, // 5 minutes cache

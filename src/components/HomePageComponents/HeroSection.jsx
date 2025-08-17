@@ -28,16 +28,16 @@ export default function HeroSection() {
 
             <div className="flex gap-4">
               <Link 
-                to="/properties" 
+                to="/all-properties" 
                 className="bg-[#48A6A7] text-white px-6 py-3 rounded-2xl text-lg shadow-lg hover:shadow-xl hover:bg-[#379091] transition"
               >
                 Explore Properties
               </Link>
               <Link 
-                to="/become-agent" 
+                to="/dashboard" 
                 className="border-2 border-[#48A6A7] text-[#006A71] px-6 py-3 rounded-2xl text-lg hover:bg-[#48A6A7]/10 transition"
               >
-                Become an Agent
+                Dashboard
               </Link>
             </div>
           </motion.div>
