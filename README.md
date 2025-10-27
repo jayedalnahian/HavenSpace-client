@@ -23,7 +23,7 @@
 
 ## 🌐 Live Website
 
-🔗 **Live Site:** [HavenSpace](https://explore-email-password-a-801d9.web.app/)
+🔗 **Live Site:** [HavenSpace](https://haven-space-ce7e4.web.app/)
 
 📁 **Client Repository:** [GitHub - Client](https://github.com/jayedalnahian/HavenSpace-client)
 
